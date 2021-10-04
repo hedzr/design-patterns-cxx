@@ -39,7 +39,8 @@ set(detail_header_files
         #${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/detail/fsm-if.hh
         )
 set(header_files
-        #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-assert.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp.hh
         #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-common.hh
         #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-config.hh
         #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-debug.hh

@@ -1,0 +1,10 @@
+//
+// Created by Hedzr Yeh on 2021/9/25.
+//
+
+#ifndef _PRIVATE_VAR_FOLDERS_DP_CONFIG_HH
+#define _PRIVATE_VAR_FOLDERS_DP_CONFIG_HH
+
+#define DP_CONFIG_HH_MACRO
+
+#endif // _PRIVATE_VAR_FOLDERS_DP_CONFIG_HH

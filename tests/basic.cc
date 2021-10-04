@@ -2,7 +2,7 @@
 // Created by Hedzr Yeh on 2021/9/26.
 //
 
-#include "fsm_cxx.hh"
+#include "design_patterns.hh"
 
 #include <iostream>
 #include <math.h>
@@ -12,157 +12,15 @@
 #include <memory>
 #include <random>
 
-namespace hicc { namespace dp { namespace state { namespace basic {
-}}}} // namespace hicc::dp::state::basic
-namespace hicc { namespace dp { namespace state { namespace bugs {
+namespace dp { namespace state { namespace basic {
+}}} // namespace dp::state::basic
+namespace dp { namespace state { namespace bugs {
     int v = 0;
-}}}} // namespace hicc::dp::state::bugs
+}}} // namespace dp::state::bugs
 
 void test_state_basic() {
-    using namespace hicc::dp::state::basic;
+    using namespace dp::state::basic;
 }
-
-namespace fsm_cxx { namespace test {
-
-    // states
-
-    AWESOME_MAKE_ENUM(my_state,
-                      Empty,
-                      Error,
-                      Initial,
-                      Terminated,
-                      Opened,
-                      Closed)
-
-    // events
-
-#if 1
-    struct begin : public fsm_cxx::event_type<begin> {
-        virtual ~begin() {}
-        int val{9};
-    };
-    FSM_DEFINE_EVENT(end);
-    FSM_DEFINE_EVENT(open);
-    FSM_DEFINE_EVENT(close);
-#else
-    struct event_base {};
-    struct begin : public event_base {};
-    struct end : public event_base {};
-    struct open : public event_base {};
-    struct close : public event_base {};
-#endif
-
-    void test_state_meta() {
-        // using namespace hicc::dp::state::meta;
-        // using namespace hmeta;
-        machine_t<my_state> m;
-        using M = decltype(m);
-
-        // @formatter:off
-        // states
-        m.state().set(my_state::Initial).as_initial().build();
-        m.state().set(my_state::Terminated).as_terminated().build();
-        m.state().set(my_state::Error).as_error()
-                .entry_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cerr << "          .. <error> entering" << '\n'; })
-                .build();
-        m.state().set(my_state::Opened)
-                .guard([](M::Event const &, M::Context &, M::State const &, M::Payload const &) -> bool { return true; })
-                .guard([](M::Event const &, M::Context &, M::State const &, M::Payload const &p) -> bool { return p._ok; })
-                .entry_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <opened> entering" << '\n'; })
-                .exit_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <opened> exiting" << '\n'; })
-                .build();
-        m.state().set(my_state::Closed)
-                .entry_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <closed> entering" << '\n'; })
-                .exit_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <closed> exiting" << '\n'; })
-                .build();
-
-        // transistions
-        m.transition().set(my_state::Initial, begin{}, my_state::Closed).build();
-        m.transition()
-                .set(my_state::Closed, open{}, my_state::Opened)
-                .guard([](M::Event const &, M::Context &, M::State const &, M::Payload const &p) -> bool { return p._ok; })
-                .entry_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <closed -> opened> entering" << '\n'; })
-                .exit_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <closed -> opened> exiting" << '\n'; })
-                .build();
-        m.transition().set(my_state::Opened, close{}, my_state::Closed).build()
-                .transition().set(my_state::Closed, end{}, my_state::Terminated).build();
-        m.transition().set(my_state::Opened, end{}, my_state::Terminated)
-                .entry_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <T><END>" << '\n'; })
-                .build();
-        // @formatter:on
-
-        m.on_error([](Reason reason, M::State const &, M::Context &, M::Event const &, M::Payload const &) {
-            std::cout << "          Error: reason = " << reason << '\n';
-        });
-
-        // debug log
-        m.on_transition([&m](auto const &from, fsm_cxx::event_t const &ev, auto const &to, auto const &actions, auto const &payload) {
-            std::printf("        [%s] -- %s --> [%s] (payload = %s)\n", m.state_to_sting(from).c_str(), ev.to_string().c_str(), m.state_to_sting(to).c_str(), to_string(payload).c_str());
-            UNUSED(actions);
-        });
-
-        // processing
-
-        m.step_by(begin{});
-        if (!m.step_by(open{}, payload_t{false}))
-            std::cout << "          E. cannot step to next with a false payload\n";
-        m.step_by(open{});
-        m.step_by(close{});
-        m.step_by(open{});
-        m.step_by(end{});
-
-        std::printf("---- END OF test_state_meta()\n\n\n");
-    }
-
-    // TODO 1. hierarchical state
-
-    AWESOME_MAKE_ENUM(calculator,
-                      Empty,
-                      Error,
-                      Off,          // Initial state, Terminated state
-                      On,           // CE/On pressed
-                      ON_Op1,       // +,-,*,/
-                      ON_Op2,       // 0..9
-                      ON_OpResult,  // =
-                      ON_OpEntered, //
-                      ON_CE)
-
-    void test_state_meta_2() {
-        // using namespace hicc::dp::state::meta;
-        // using namespace hmeta;
-        machine_t<my_state, fsm_cxx::event_t, std::mutex> m;
-        using M = decltype(m);
-
-        m.state().set(my_state::Initial).as_initial().build();
-        m.state().set(my_state::Terminated).as_terminated().build();
-        m.state().set(my_state::Error).as_error()
-                .entry_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cerr << "          .. <error> entering" << '\n'; })
-                .build();
-
-        m.transition().set(my_state::Initial, begin{}, my_state::Closed).build();
-        m.transition().set(my_state::Closed, open{}, my_state::Opened)
-                .entry_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <closed -> opened> entering" << '\n'; })
-                .exit_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <closed -> opened> exiting" << '\n'; })
-                .build();
-        m.transition().set(my_state::Opened, close{}, my_state::Closed).build();
-        m.transition().set(my_state::Closed, end{}, my_state::Terminated).build();
-        m.transition().set(my_state::Opened,end{}, my_state::Terminated)
-                .entry_action([](M::Event const &, M::Context &, M::State const &, M::Payload const &) { std::cout << "          .. <T><END>" << '\n'; })
-                .build();
-
-        // debug log
-        m.on_transition([&m](auto const &from, auto const &ev, auto const &to, auto const &actions, auto const &payload) {
-            std::printf("        [%s] -- %s --> [%s] (payload: %s)\n", m.state_to_sting(from).c_str(), std::string(debug::type_name<decltype(ev)>()).c_str(), m.state_to_sting(to).c_str(), to_string(payload).c_str());
-            UNUSED(actions);
-        });
-
-        // processing
-
-        m << begin{} << open{} << close{} << open{} << end{};
-
-        std::printf("---- END OF test_state_meta_2()\n\n\n");
-    }
-}} // namespace fsm_cxx::test
 
 namespace lambdas {
     void f(int n1, int n2, int n3, const int &n4, int n5) {
@@ -238,10 +96,10 @@ void test_lock_guard() {
         std::lock_guard<std::mutex> lock(mu);
     }
     {
-        fsm_cxx::util::cool::lock_guard<std::mutex> lock;
+        dp::util::cool::lock_guard<std::mutex> lock;
     }
     {
-        fsm_cxx::util::cool::lock_guard<void> lock;
+        dp::util::cool::lock_guard<void> lock;
     }
 }
 
@@ -249,11 +107,9 @@ int main() {
 
     test_lock_guard();
 
-    // lambdas::test_lambdas();
+    lambdas::test_lambdas();
+    
     test_state_basic();
-    fsm_cxx::test::test_state_meta();
-
-    fsm_cxx::test::test_state_meta_2();
 
     return 0;
 }
