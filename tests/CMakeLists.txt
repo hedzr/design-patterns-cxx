@@ -28,7 +28,7 @@ function(define_test_program name)
             PRIVATE
             #Catch2::Catch2
             Threads::Threads
-            fsm_cxx
+            design_patterns_cxx
             # cmdr11::cmdr11
             # fmt::fmt-header-only
             )

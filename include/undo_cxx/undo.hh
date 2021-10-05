@@ -1,0 +1,8 @@
+//
+// Created by Hedzr Yeh on 2021/10/5.
+//
+
+#ifndef DESIGN_PATTERNS_CXX_UNDO_HH
+#define DESIGN_PATTERNS_CXX_UNDO_HH
+
+#endif //DESIGN_PATTERNS_CXX_UNDO_HH

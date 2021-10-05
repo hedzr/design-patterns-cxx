@@ -1,0 +1,23 @@
+//
+// Created by Hedzr Yeh on 2019-01-28.
+//
+
+#ifndef __@PROJECT_MACRO_PREFIX@_CONFIG_BASE_H
+#define __@PROJECT_MACRO_PREFIX@_CONFIG_BASE_H
+
+#ifndef xT
+#define xT(str) str
+#endif
+
+/*  NB: this file is parsed by automatic tools so don't change its format! */
+
+#define @PROJECT_MACRO_PREFIX@_CPU                    xT("@CMAKE_SYSTEM_PROCESSOR@")
+#define @PROJECT_MACRO_PREFIX@_CPU_ARCH               xT("@CPU_ARCH@")
+#define @PROJECT_MACRO_PREFIX@_CPU_ARCH_NAME          xT("@CPU_ARCH_NAME@")
+
+#cmakedefine01 USE_DEBUG_MALLOC
+#cmakedefine01 USE_DEBUG           
+
+#define @PROJECT_MACRO_PREFIX@_BUILD_NAME             xT("@CMAKE_BUILD_NAME@")
+
+#endif //__@PROJECT_MACRO_PREFIX@_CONFIG_BASE_H
