@@ -16,8 +16,8 @@ include(dummy-project)
 
 option(OK "PL-OK" ON)
 
-option(DP_CXX_BUILD_TESTS_EXAMPLES "Build Test Examples OK" OFF)
-option(DP_CXX_BUILD_DOCS "Build Docs-OK" OFF)
+#option(DP_CXX_BUILD_TESTS_EXAMPLES "Build Test Examples OK" OFF)
+#option(DP_CXX_BUILD_DOCS "Build Docs-OK" OFF)
 
 option(DP_CXX_ENABLE_ASSERTIONS "Enable Assertions-OK" ON)
 option(DP_CXX_ENABLE_PRECONDITION_CHECKS "Enable Precondition Checks-OK" ON)
@@ -29,18 +29,33 @@ option(DP_CXX_ENABLE_PRECONDITION_CHECKS "Enable Precondition Checks-OK" ON)
 project(design_patterns_cxx)
 set(PROJECT_MACRO_PREFIX DP_CXX)
 set(DP_CXX_detail_header_files
-        #${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/detail/fsm-if.hh
+        #${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/detail/dp-if.hh
         )
 set(DP_CXX_header_files
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns_cxx.hh
         ${CMAKE_GENERATED_DIR}/${PROJECT_NAME}-version.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp.hh
-        #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-common.hh
-        #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-config.hh
-        #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-debug.hh
-        #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-def.hh
-        #        ${CMAKE_CURRENT_SOURCE_DIR}/include/fsm_cxx/fsm-sm.hh
         )
-include(versions-gen)
 define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
 
+
+project(undo_cxx)
+set(PROJECT_MACRO_PREFIX UNDO_CXX)
+set(UNDO_CXX_detail_header_files
+        #${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/detail/undo-if.hh
+        )
+set(UNDO_CXX_header_files
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx.hh
+        ${CMAKE_GENERATED_DIR}/${PROJECT_NAME}-version.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo.hh
+        )
+define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
+
+
+#### TESTS ##################################################
+
+if (${UNDO_CXX_BUILD_TESTS_EXAMPLES} OR ${DP_CXX_BUILD_TESTS_EXAMPLES} OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
+    enable_testing()
+    add_subdirectory(examples/)
+    add_subdirectory(tests/)
+endif ()

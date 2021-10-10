@@ -1,6 +1,6 @@
 project(test
         VERSION ${VERSION}
-        DESCRIPTION "tests - test apps for hicc cxx11 library"
+        DESCRIPTION "tests - test apps for cxx17 library"
         LANGUAGES C CXX)
 
 set(PROJECT_ARCHIVE_NAME ${PROJECT_NAME}s-${PROJECT_VERSION})
@@ -29,6 +29,7 @@ function(define_test_program name)
             #Catch2::Catch2
             Threads::Threads
             design_patterns_cxx
+            undo_cxx
             # cmdr11::cmdr11
             # fmt::fmt-header-only
             )
@@ -39,11 +40,11 @@ function(define_test_program name)
     #            )
     if (MSVC)
         target_compile_options(${PROJECT_NAME}-${name} PRIVATE /W4 /WX /utf-8
-                /DFSM_CXX_UNIT_TEST=1)
+                /D${PROJECT_MACRO_PREFIX}_UNIT_TEST=1)
     else ()
         target_compile_options(${PROJECT_NAME}-${name} PRIVATE
                 -pedantic -Wall -Wextra -Wshadow -Werror -pthread
-                -DHICC_CXX_UNIT_TEST=1
+                -D${PROJECT_MACRO_PREFIX}_UNIT_TEST=1
                 )
         if (DEBUG)
             target_compile_options(${PROJECT_NAME}-${name} PRIVATE
@@ -79,6 +80,8 @@ function(define_test_program name)
 endfunction()
 
 define_test_program(basic basic.cc)
+define_test_program(undo undo.cc)
+
 
 
 message(STATUS "END of tests")

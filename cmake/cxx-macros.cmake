@@ -19,15 +19,23 @@ macro(define_cxx_project PROJ_NAME PROJ_PREFIX)
     set(_header_files ${${PROJ_PREFIX}_header_files})
     debug_print_list_value(_header_files)
     # debug_print_value(${PROJ_NAME})
-    
+
     set(CMAKE_CXX_STANDARD 17)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
-    # set(CMAKE_CXX_EXTENSIONS OFF)
+    set(CMAKE_CXX_EXTENSIONS ON)
     #
     # Just for QT app ...
     #set(CMAKE_AUTOMOC ON)    # Qt moc, meta-object compiler
     #set(CMAKE_AUTORCC ON)    # Qt rcc, resources compiler
     #set(CMAKE_AUTOUIC ON)    # Qt uic, User-Interface compiler
+
+
+    gen_versions(${PROJ_NAME} ${PROJ_PREFIX}
+            ${PROJ_NAME}-version.hh
+            ${PROJ_NAME}-${PROJECT_VERSION}
+            ${CMAKE_SOURCE_DIR}/${CMAKE_SCRIPTS}/version.h.in
+            ${CMAKE_SOURCE_DIR}/${CMAKE_SCRIPTS}/config-base.h.in
+            )
 
 
     add_library(${PROJ_NAME} INTERFACE)
@@ -87,14 +95,14 @@ set(${PROJ_NAME}_LIBRARIES ${PROJ_NAME})
     # other subdirectories
     # only add if not inside add_subdirectory()
     option(${PROJ_PREFIX}_BUILD_TESTS_EXAMPLES "build test and example" OFF)
-    if (${${PROJ_PREFIX}_BUILD_TESTS_EXAMPLES} OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
+    if (${${PROJ_PREFIX}_BUILD_TESTS_EXAMPLES} AND (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
         enable_testing()
         add_subdirectory(examples/)
         add_subdirectory(tests/)
     endif ()
 
     option(${PROJ_PREFIX}_BUILD_DOCS "generate documentation" OFF)
-    if (${PROJ_PREFIX}_BUILD_DOCS)
+    if (${PROJ_PREFIX}_BUILD_DOCS AND (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
         add_subdirectory(docs/)
     endif ()
 
