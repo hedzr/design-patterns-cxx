@@ -11,9 +11,6 @@
 #ifndef UNDO_CXX_UNDO_IF_HH
 #define UNDO_CXX_UNDO_IF_HH
 
-#include <list>
-#include <vector>
-
 #include <type_traits>
 
 #if (__cplusplus > 201402L)
@@ -23,6 +20,7 @@
 #include <chrono>
 #include <deque>
 #include <forward_list>
+#include <list>
 #include <map>
 #include <queue>
 #include <set>
@@ -33,12 +31,15 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
+#include <vector>
 
 #include <cstdlib>
 #include <memory>
 #include <string>
 
 
+#if !defined(__TRAITS_VOIT_T_DEFINED)
+#define __TRAITS_VOIT_T_DEFINED
 // ------------------------- void_t
 namespace undo_cxx::traits {
 #if (__cplusplus > 201402L)
@@ -53,8 +54,11 @@ namespace undo_cxx::traits {
     using void_t = typename make_void<T...>::type;
 #endif
 } // namespace undo_cxx::traits
+#endif // __TRAITS_VOIT_T_DEFINED
 
 
+#if !defined(__TRAITS_IS_DETECTED_DEFINED)
+#define __TRAITS_IS_DETECTED_DEFINED
 // ------------------------- is_detected
 namespace undo_cxx::traits {
     template<class, template<class> class, class = void_t<>>
@@ -114,8 +118,6 @@ namespace undo_cxx::traits {
     template<template<class...> class Op, class... Args>
     constexpr bool is_detected_v = is_detected<Op, Args...>::value;
 
-#define __TRAITS_IS_DETECTED_DEFINED
-
     template<class T, template<class...> class Op, class... Args>
     using is_detected_exact = std::is_same<T, detected_t<Op, Args...>>;
 
@@ -151,6 +153,7 @@ namespace undo_cxx::traits {
 #endif
 
 } // namespace undo_cxx::traits
+#endif // __TRAITS_IS_DETECTED_DEFINED
 
 // ------------------------- has_string
 namespace undo_cxx::traits {
@@ -285,19 +288,22 @@ namespace undo_cxx::traits {
     // template<class T, class Index = std::size_t>
     // constexpr bool has_op_subscript<T, void_t<subscript_t<T,Index>>>{true};
 
+#if !defined(__GNUC__) // gcc 10.x failed, 11.x ok,
     template<typename T, typename Ret, typename Index>
     using subscript_t = std::integral_constant < Ret (T::*)(Index),
           &T::operator[]>;
 
     template<typename T, typename Ret, typename Index>
-    using has_subscript = is_detected<subscript_t, T, Ret, Index>;
+    using has_subscript = std::experimental::is_detected<subscript_t, T, Ret, Index>;
 
     template<typename T, typename Ret, typename Index>
     constexpr bool has_subscript_v = has_subscript<T, Ret, Index>::value;
 
-    static_assert(has_subscript<std::vector<int>, int &, std::size_t>::value);
+#if !defined(__GNUC__) // gcc 10.x failed, 11.x ok,
+    static_assert(has_subscript<std::vector<int>, int &, size_t>::value == true);
+#endif
     static_assert(!has_subscript<std::vector<int>, int &, int>::value);
-
+#endif
 
     // template <typename T, typename = void>
     // struct has_push : std::false_type {};
@@ -396,15 +402,39 @@ namespace undo_cxx::traits {
     template<typename T>
     constexpr bool has_emplace_v = has_emplace<T>::value;
 
-    template<typename T, typename = void>
-    struct has_emplace_variadic : std::false_type {};
+    // template<typename T, typename = void>
+    // struct has_emplace_variadic : std::false_type {};
+    //
+    // /**
+    //  * @brief not yet!!
+    //  * @tparam T 
+    //  */
+    // template<typename T>
+    // struct has_emplace_variadic<T, void_t<decltype(std::declval<T>().emplace(std::declval<typename T::value_type>()))>> : std::true_type {};
 
+    template<class T, typename... Arguments>
+    using emplace_variadic_t = std::conditional_t<
+            true,
+            decltype(std::declval<T>().emplace(std::declval<Arguments>()...)),
+            std::integral_constant<
+                    decltype(std::declval<T>().emplace(std::declval<Arguments>()...)) (T::*)(Arguments...),
+                    &T::emplace>>;
     /**
-     * @brief not yet!!
+     * @brief test member function `emplace()` with variadic params
      * @tparam T 
+     * @tparam Arguments 
+     * @details For example:
+     * @code{c++}
+     * using C = std::list&lt;int>;
+     * static_assert(has_emplace_variadic_v&lt;C, C::const_iterator, int &&>);
+     * @endcode
      */
-    template<typename T>
-    struct has_emplace_variadic<T, void_t<decltype(std::declval<T>().emplace(std::declval<typename T::value_type>()))>> : std::true_type {};
+    template<class T, typename... Arguments>
+    constexpr bool has_emplace_variadic_v = is_detected_v<emplace_variadic_t, T, Arguments...>;
+    namespace detail {
+        using C = std::list<int>;
+        static_assert(has_emplace_variadic_v<C, C::const_iterator, int &&>);
+    } // namespace detail
 
 
     //
@@ -657,7 +687,7 @@ namespace undo_cxx::traits {
     };
 
 
-} // namespace cmdr::traits
+} // namespace undo_cxx::traits
 
 
 #if 0
