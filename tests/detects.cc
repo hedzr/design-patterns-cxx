@@ -188,7 +188,7 @@ namespace dp { namespace undo { namespace bugs {
             }
         }
         void add(T &&t) {
-            if constexpr (undo_cxx::traits::has_emplace_variadic<Container>::value) {
+            if constexpr (undo_cxx::traits::has_emplace_variadic_v<Container>) {
                 _coll.emplace(t);
                 std::cout << "M: emplace(...) invoked with " << std::quoted(t) << '\n';
             } else {
@@ -272,8 +272,8 @@ int main() {
     test_detect_1();
     test_detect_2();
 
-    std::list<int> xc;
-    xc.emplace();
+    // std::list<int> xc;
+    // xc.emplace();
     // std::vector<int> xcv;
     // xcv.emplace();
 
