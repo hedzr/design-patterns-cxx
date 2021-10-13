@@ -8,7 +8,7 @@
 // Created by Hedzr Yeh on 2021/10/13.
 //
 
-#include "undo_cxx.hh"
+#include "design_patterns_cxx.hh"
 
 #include <iomanip>
 #include <iostream>
@@ -32,7 +32,7 @@ int test(int x, int y, int z) {
 }
 
 void test_partial() {
-    using namespace undo_cxx::util::cool;
+    using namespace dp::util::cool;
     std::cout << '\n';
 
     auto f = partial(test, 5, 3);
@@ -44,7 +44,7 @@ void test_partial() {
 }
 
 void test_curry() {
-    using namespace undo_cxx::util::cool;
+    using namespace dp::util::cool;
     std::cout << '\n';
 
     auto f = curry(test)(1);

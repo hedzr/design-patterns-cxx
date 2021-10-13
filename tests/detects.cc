@@ -1,4 +1,4 @@
-// undo_cxx Library
+// design_patterns_cxx Library
 // Copyright © 2021 Hedzr Yeh.
 //
 // This file is released under the terms of the MIT license.
@@ -8,7 +8,7 @@
 // Created by Hedzr Yeh on 2021/10/13.
 //
 
-#include "undo_cxx.hh"
+#include "design_patterns_cxx.hh"
 
 #include <iomanip>
 #include <iostream>
@@ -81,7 +81,7 @@ namespace md {
             return vv_;
         }
     };
-    static_assert(undo_cxx::traits::is_detected_v<bar_t, foo, int &&>, "not detected");
+    static_assert(dp::traits::is_detected_v<bar_t, foo, int &&>, "not detected");
 
     // template<typename T>
     // class has_string {
@@ -107,7 +107,7 @@ namespace md {
 
 void test_detect_2() {
     using namespace md;
-    using namespace undo_cxx::traits;
+    using namespace dp::traits;
     std::cout << '\n'
               << has_string<int>::value << '\n'
               << has_string<with_string>::value << '\n'
@@ -150,28 +150,28 @@ namespace dp { namespace undo { namespace bugs {
     class M {
     public:
         void test_emplace() {
-            if constexpr (undo_cxx::traits::has_emplace_v<Container>) {
+            if constexpr (dp::traits::has_emplace_v<Container>) {
                 std::cout << "M: emplace() exists." << '\n';
             } else {
                 std::cout << "M: emplace() not exists." << '\n';
             }
         }
         void test_emplace_back() {
-            if constexpr (undo_cxx::traits::has_emplace_back_v<Container>) {
+            if constexpr (dp::traits::has_emplace_back_v<Container>) {
                 std::cout << "M: emplace_back() exists." << '\n';
             } else {
                 std::cout << "M: emplace_back() not exists." << '\n';
             }
         }
         void test_push_back() {
-            if constexpr (undo_cxx::traits::has_push_back_v<Container>) {
+            if constexpr (dp::traits::has_push_back_v<Container>) {
                 std::cout << "M: push_back() exists." << '\n';
             } else {
                 std::cout << "M: push_back() not exists." << '\n';
             }
         }
         void test_pop_back() {
-            if constexpr (undo_cxx::traits::has_pop_back_v<Container>) {
+            if constexpr (dp::traits::has_pop_back_v<Container>) {
                 std::cout << "M: pop_back() exists." << '\n';
             } else {
                 std::cout << "M: pop_back() not exists." << '\n';
@@ -179,16 +179,16 @@ namespace dp { namespace undo { namespace bugs {
         }
         void test_begin() {
             using TX = std::list<std::string>;
-            static_assert(undo_cxx::traits::has_begin_v<TX>);
+            static_assert(dp::traits::has_begin_v<TX>);
 
-            if constexpr (undo_cxx::traits::has_begin_v<Container>) {
+            if constexpr (dp::traits::has_begin_v<Container>) {
                 std::cout << "M: begin() exists." << '\n';
             } else {
                 std::cout << "M: begin() not exists." << '\n';
             }
         }
         void add(T &&t) {
-            if constexpr (undo_cxx::traits::has_emplace_variadic_v<Container>) {
+            if constexpr (dp::traits::has_emplace_variadic_v<Container>) {
                 _coll.emplace(t);
                 std::cout << "M: emplace(...) invoked with " << std::quoted(t) << '\n';
             } else {
@@ -196,7 +196,7 @@ namespace dp { namespace undo { namespace bugs {
             }
         }
         void add(T const &t) {
-            if constexpr (undo_cxx::traits::has_push_v<Container>) {
+            if constexpr (dp::traits::has_push_v<Container>) {
                 _coll.push(t);
                 std::cout << "M: push() invoked with " << std::quoted(t) << '\n';
             } else {
@@ -204,7 +204,7 @@ namespace dp { namespace undo { namespace bugs {
             }
         }
         void pop() {
-            if constexpr (undo_cxx::traits::has_pop_v<Container>) {
+            if constexpr (dp::traits::has_pop_v<Container>) {
                 _coll.pop();
                 std::cout << "M: pop() invoked." << '\n';
             } else {
@@ -212,8 +212,8 @@ namespace dp { namespace undo { namespace bugs {
             }
         }
         T const &top() const {
-            // if constexpr (undo_cxx::traits::has_top_func<Container>::value) {
-            if constexpr (undo_cxx::traits::has_top_v<Container>) {
+            // if constexpr (dp::traits::has_top_func<Container>::value) {
+            if constexpr (dp::traits::has_top_v<Container>) {
                 auto &vv = _coll.top();
                 std::cout << "M: top() invoked." << '\n';
                 return vv;
@@ -278,6 +278,6 @@ int main() {
     // xcv.emplace();
 
     using C = std::list<int>;
-    static_assert(undo_cxx::traits::has_emplace_variadic_v<C, C::const_iterator, int&&>);
+    static_assert(dp::traits::has_emplace_variadic_v<C, C::const_iterator, int&&>);
     return 0;
 }

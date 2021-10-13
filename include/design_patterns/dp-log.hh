@@ -1,17 +1,17 @@
-// undo_cxx Library
+// design_patterns_cxx Library
 // Copyright © 2021 Hedzr Yeh.
 //
 // This file is released under the terms of the MIT license.
 // Read /LICENSE for more information.
 
 //
-// Created by Hedzr Yeh on 2021/10/11.
+// Created by Hedzr Yeh on 2021/10/13.
 //
 
-#ifndef UNDO_CXX_UNDO_LOG_HH
-#define UNDO_CXX_UNDO_LOG_HH
+#ifndef DESIGN_PATTERNS_CXX_DP_LOG_HH
+#define DESIGN_PATTERNS_CXX_DP_LOG_HH
 
-#include "undo-common.hh"
+#include "dp-common.hh"
 
 #include <cstdarg>
 #include <cstdio>
@@ -21,7 +21,7 @@
 #include <vector>
 
 
-namespace undo_cxx::log {
+namespace dp::log {
 
     namespace detail {
         class Log final : public util::singleton<Log> {
@@ -144,19 +144,19 @@ namespace undo_cxx::log {
         static detail::Log &xlog() { return detail::Log::instance(); }
     };
     // Logger log;
-} // namespace undo_cxx::log
+} // namespace dp::log
 
 #if defined(_MSC_VER)
-#define dbg_print(...) undo_cxx::log::holder(__FILE__, __LINE__, __FUNCSIG__)(__VA_ARGS__)
+#define dbg_print(...) dp::log::holder(__FILE__, __LINE__, __FUNCSIG__)(__VA_ARGS__)
 #else
-#define dbg_print(...) undo_cxx::log::holder(__FILE__, __LINE__, __PRETTY_FUNCTION__)(__VA_ARGS__)
+#define dbg_print(...) dp::log::holder(__FILE__, __LINE__, __PRETTY_FUNCTION__)(__VA_ARGS__)
 #endif
 
 #if defined(_DEBUG)
 #if defined(_MSC_VER)
-#define dbg_debug(...) undo_cxx::log::holder(__FILE__, __LINE__, __FUNCSIG__)(__VA_ARGS__)
+#define dbg_debug(...) dp::log::holder(__FILE__, __LINE__, __FUNCSIG__)(__VA_ARGS__)
 #else
-#define dbg_debug(...) undo_cxx::log::holder(__FILE__, __LINE__, __PRETTY_FUNCTION__)(__VA_ARGS__)
+#define dbg_debug(...) dp::log::holder(__FILE__, __LINE__, __PRETTY_FUNCTION__)(__VA_ARGS__)
 #endif
 #else
 #if defined(__GNUG__) || defined(_MSC_VER)
@@ -179,9 +179,9 @@ namespace undo_cxx::log {
 //     va_end(va);
 // }
 #if defined(_MSC_VER)
-#define dbg_verbose_debug(...) undo_cxx::log::holder(__FILE__, __LINE__, __FUNCSIG__)(__VA_ARGS__)
+#define dbg_verbose_debug(...) dp::log::holder(__FILE__, __LINE__, __FUNCSIG__)(__VA_ARGS__)
 #else
-#define dbg_verbose_debug(...) undo_cxx::log::holder(__FILE__, __LINE__, __PRETTY_FUNCTION__)(__VA_ARGS__)
+#define dbg_verbose_debug(...) dp::log::holder(__FILE__, __LINE__, __PRETTY_FUNCTION__)(__VA_ARGS__)
 #endif
 #else
 // #define dbg_verbose_debug(...)
@@ -197,4 +197,5 @@ inline void dbg_verbose_debug([[maybe_unused]] Args &&...args) { (void) (sizeof.
 #endif
 #define dbg_trace dbg_verbose_debug
 
-#endif //UNDO_CXX_UNDO_LOG_HH
+
+#endif //DESIGN_PATTERNS_CXX_DP_LOG_HH

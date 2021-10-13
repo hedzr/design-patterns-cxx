@@ -39,27 +39,27 @@ set(DP_CXX_header_files
 define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
 
 
-project(undo_cxx)
-set(PROJECT_MACRO_PREFIX UNDO_CXX)
-set(UNDO_CXX_detail_header_files
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/detail/undo-if.hh
-        )
-set(UNDO_CXX_header_files
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx.hh
-        ${CMAKE_GENERATED_DIR}/${PROJECT_NAME}-version.hh
-        ${CMAKE_GENERATED_DIR}/${PROJECT_NAME}-config.hh
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo.hh
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo-common.hh
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo-def.hh
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo-log.hh
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo-unmgr.hh
-        )
-define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
+#project(undo_cxx)
+#set(PROJECT_MACRO_PREFIX UNDO_CXX)
+#set(UNDO_CXX_detail_header_files
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/detail/undo-if.hh
+#        )
+#set(UNDO_CXX_header_files
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx.hh
+#        ${CMAKE_GENERATED_DIR}/${PROJECT_NAME}-version.hh
+#        ${CMAKE_GENERATED_DIR}/${PROJECT_NAME}-config.hh
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo.hh
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo-common.hh
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo-def.hh
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo-log.hh
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/undo-unmgr.hh
+#        )
+#define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
 
 
 #### TESTS ##################################################
 
-if (${UNDO_CXX_BUILD_TESTS_EXAMPLES} OR ${DP_CXX_BUILD_TESTS_EXAMPLES} OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
+if (${DP_CXX_BUILD_TESTS_EXAMPLES} OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
     enable_testing()
     add_subdirectory(examples/)
     add_subdirectory(tests/)

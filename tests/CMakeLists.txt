@@ -29,7 +29,7 @@ function(define_test_program name)
             #Catch2::Catch2
             Threads::Threads
             design_patterns_cxx
-            undo_cxx
+            # undo_cxx
             # cmdr11::cmdr11
             # fmt::fmt-header-only
             )
@@ -83,7 +83,7 @@ define_test_program(detects detects.cc)
 define_test_program(partial_curry partial_curry.cc)
 
 define_test_program(basic basic.cc)
-define_test_program(undo undo.cc)
+#define_test_program(undo undo.cc)
 
 
 
