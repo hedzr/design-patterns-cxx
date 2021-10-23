@@ -38,6 +38,22 @@ macro(define_cxx_project PROJ_NAME PROJ_PREFIX)
             )
 
 
+    if (NOT DEFINED _${PROJ_NAME}_enable_assertions)
+        if (DEFINED ${PROJ_PREFIX}_ENABLE_ASSERTIONS)
+            SET(_${PROJ_NAME}_enable_assertions 1)
+        else ()
+            SET(_${PROJ_NAME}_enable_assertions 0)
+        endif ()
+    endif ()
+    if (NOT DEFINED _${PROJ_NAME}_enable_precondition_checks)
+        if (DEFINED ${PROJ_PREFIX}_ENABLE_PRECONDITION_CHECKS)
+            SET(_${PROJ_NAME}_enable_precondition_checks 1)
+        else ()
+            SET(_${PROJ_NAME}_enable_precondition_checks 0)
+        endif ()
+    endif ()
+
+
     add_library(${PROJ_NAME} INTERFACE)
     target_sources(${PROJ_NAME} INTERFACE "$<BUILD_INTERFACE:${_detail_header_files};${_header_files}>")
     target_include_directories(${PROJ_NAME} INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>)
@@ -107,4 +123,14 @@ set(${PROJ_NAME}_LIBRARIES ${PROJ_NAME})
     endif ()
 
 endmacro()
+
+
+function(add_cxx_20_to target)
+    set_target_properties(${target}
+            PROPERTIES
+            CXX_STANDARD 20
+            CXX_STANDARD_REQUIRED YES
+            CXX_EXTENSIONS OFF          # use -std=c++11 rather than -std=gnu++11
+            )
+endfunction()
 
