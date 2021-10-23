@@ -26,7 +26,10 @@ option(DP_CXX_ENABLE_PRECONDITION_CHECKS "Enable Precondition Checks-OK" ON)
 #### PROJECTS ##################################################
 
 
-project(design_patterns_cxx)
+project(design_patterns_cxx
+        VERSION ${VERSION}
+        DESCRIPTION "design-patterns-cxx repo."
+        LANGUAGES CXX)
 set(PROJECT_MACRO_PREFIX DP_CXX)
 set(DP_CXX_detail_header_files
         #${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/detail/dp-if.hh

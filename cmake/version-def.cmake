@@ -1,6 +1,6 @@
 if (EXISTS ${CMAKE_SOURCE_DIR}/.version.cmake)
-    message("   version decl file found: ${CMAKE_SOURCE_DIR}/.version.cmake")
     include(.version)
+    message("   version decl file found: ${CMAKE_SOURCE_DIR}/.version.cmake (V${VERSION})")
     #elseif (EXIST)
 else ()
     message("   version decl file ignored")

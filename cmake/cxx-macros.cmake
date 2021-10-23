@@ -52,6 +52,7 @@ macro(define_cxx_project PROJ_NAME PROJ_PREFIX)
             SET(_${PROJ_NAME}_enable_precondition_checks 0)
         endif ()
     endif ()
+    message(STATUS "Config (CMAKE_BUILD_NAME): ${CMAKE_BUILD_NAME}")
 
 
     add_library(${PROJ_NAME} INTERFACE)
@@ -111,14 +112,14 @@ set(${PROJ_NAME}_LIBRARIES ${PROJ_NAME})
     # other subdirectories
     # only add if not inside add_subdirectory()
     option(${PROJ_PREFIX}_BUILD_TESTS_EXAMPLES "build test and example" OFF)
-    if (${${PROJ_PREFIX}_BUILD_TESTS_EXAMPLES} AND (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
+    if (${${PROJ_PREFIX}_BUILD_TESTS_EXAMPLES} OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
         enable_testing()
         add_subdirectory(examples/)
         add_subdirectory(tests/)
     endif ()
 
     option(${PROJ_PREFIX}_BUILD_DOCS "generate documentation" OFF)
-    if (${PROJ_PREFIX}_BUILD_DOCS AND (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
+    if (${PROJ_PREFIX}_BUILD_DOCS OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
         add_subdirectory(docs/)
     endif ()
 

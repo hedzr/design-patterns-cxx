@@ -21,7 +21,7 @@ macro(gen_versions PROJ_NAME PROJECT_MACRO_PREFIX VERSION_H_NAME ARCHIVE_NAME xV
 
     if (DEFINED ARCHIVE_NAME)
     else ()
-        set(ARCHIVE_NAME ${PROJ_NAME}-${PROJECT_VERSION})
+        set(ARCHIVE_NAME ${PROJ_NAME}-${CMAKE_PROJECT_VERSION})
     endif ()
 
     if (DEFINED xVERSION_IN)
@@ -48,10 +48,10 @@ macro(gen_versions PROJ_NAME PROJECT_MACRO_PREFIX VERSION_H_NAME ARCHIVE_NAME xV
                 OUTPUT_VARIABLE GIT_COMMIT_HASH
                 OUTPUT_STRIP_TRAILING_WHITESPACE
         )
-    else (EXISTS "${CMAKE_SOURCE_DIR}/.git")
+    else ()
         set(GIT_BRANCH "")
         set(GIT_COMMIT_HASH "")
-    endif (EXISTS "${CMAKE_SOURCE_DIR}/.git")
+    endif ()
 
     # get_git_head_revision(GIT_REFSPEC GIT_SHA1)
     string(SUBSTRING "${GIT_COMMIT_HASH}" 0 12 GIT_REV)
@@ -63,7 +63,7 @@ macro(gen_versions PROJ_NAME PROJECT_MACRO_PREFIX VERSION_H_NAME ARCHIVE_NAME xV
     message(STATUS "- Git commit hash:    ${GIT_COMMIT_HASH}")
     message(STATUS "- Git rev:            ${GIT_REV}")
 
-    if (CMAKE_GENERATED_DIR)
+    if (NOT "${CMAKE_GENERATED_DIR}")
     else ()
         message(FATAL " >> ERROR: please include target-dirs.cmake at first.")
         # we need CMAKE_GENERATED_DIR at present.
