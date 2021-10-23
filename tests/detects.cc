@@ -145,6 +145,28 @@ void test_detect_1() {
 }
 
 
+// -------------------
+
+template<class T, typename... Arguments>
+using bar_t = std::conditional_t<
+        true,
+        decltype(std::declval<T>().bar(std::declval<Arguments>()...)),
+        std::integral_constant<
+                decltype(std::declval<T>().bar(std::declval<Arguments>()...)) (T::*)(Arguments...),
+                &T::bar>>;
+
+struct foo1 {
+    int const &bar(int &&) {
+        static int vv_{0};
+        return vv_;
+    }
+};
+static_assert(dp::traits::is_detected_v<bar_t, foo1, int &&>, "not detected");
+
+
+// -------------------
+
+
 namespace dp { namespace undo { namespace bugs {
     template<typename T, class Container = std::stack<T>>
     class M {
@@ -278,6 +300,6 @@ int main() {
     // xcv.emplace();
 
     using C = std::list<int>;
-    static_assert(dp::traits::has_emplace_variadic_v<C, C::const_iterator, int&&>);
+    static_assert(dp::traits::has_emplace_variadic_v<C, C::const_iterator, int &&>);
     return 0;
 }

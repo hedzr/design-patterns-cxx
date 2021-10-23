@@ -13,6 +13,9 @@
 
 #pragma once
 
+#include "design_patterns_cxx-config.hh"
+#include "design_patterns_cxx-version.hh"
+
 #include "dp-config.hh"
 #include "dp-def.hh"
 
@@ -22,8 +25,18 @@
 #include "dp-if.hh"
 
 #include "dp-common.hh"
-
 #include "dp-log.hh"
+
+#include "dp-chrono.hh"
+#include "dp-string.hh"
+
+#include "dp-mediator.hh"
+
+#include "dp-util.hh"
+
+
+#include "dp-x-class.hh"
+#include "dp-x-test.hh"
 
 
 #endif //DESIGN_PATTERNS_CXX_DP_HH

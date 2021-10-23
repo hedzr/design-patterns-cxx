@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1174px" preserveAspectRatio="none" style="width:2114px;height:1174px;background:#00000000;" version="1.1" viewBox="0 0 2114 1174" width="2114px" zoomAndPan="magnify"><defs><filter height="300%" id="f1k5u1oaekgrzm" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="4.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="8.0" dy="8.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[408d7c78b8630a93f94c528109243347]
+class guide--><rect codeLine="4" fill="#FEFECE" filter="url(#f1k5u1oaekgrzm)" height="96" id="guide" style="stroke:#A80036;stroke-width:3.0;" width="128" x="973" y="14"/><ellipse cx="1003" cy="46" fill="#ADD1B2" rx="22" ry="22" style="stroke:#A80036;stroke-width:2.0;"/><path d="M1007.9463,58.2861 Q1006.7842,58.8838 1005.5059,59.1826 Q1004.2275,59.4814 1002.8164,59.4814 Q997.8027,59.4814 995.1631,56.1777 Q992.5234,52.874 992.5234,46.6318 Q992.5234,40.373 995.1631,37.0693 Q997.8027,33.7656 1002.8164,33.7656 Q1004.2275,33.7656 1005.5225,34.0645 Q1006.8174,34.3633 1007.9463,34.9609 L1007.9463,40.4063 Q1006.6846,39.2441 1005.4976,38.7046 Q1004.3105,38.165 1003.0488,38.165 Q1000.3594,38.165 998.9897,40.2983 Q997.6201,42.4316 997.6201,46.6318 Q997.6201,50.8154 998.9897,52.9487 Q1000.3594,55.082 1003.0488,55.082 Q1004.3105,55.082 1005.4976,54.5425 Q1006.6846,54.0029 1007.9463,52.8408 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="64" x="1031" y="55.0703">guide</text><line style="stroke:#A80036;stroke-width:3.0;" x1="975" x2="1099" y1="78" y2="78"/><line style="stroke:#A80036;stroke-width:3.0;" x1="975" x2="1099" y1="94" y2="94"/><path d="M1172,37 L1172,54 L1101.96,62 L1172,70 L1172,87.6211 A0,0 0 0 0 1172,87.6211 L1406,87.6211 A0,0 0 0 0 1406,87.6211 L1406,57 L1386,37 L1172,37 A0,0 0 0 0 1172,37 " fill="#FBFB77" filter="url(#f1k5u1oaekgrzm)" style="stroke:#A80036;stroke-width:2.0;"/><path d="M1386,37 L1386,57 L1406,57 L1386,37 " fill="#FBFB77" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="192" x="1184" y="72.1367">the result class</text><!--MD5=[62c90da8a1ca0da70c20267d93f7ca33]
+class context--><rect codeLine="7" fill="#FEFECE" filter="url(#f1k5u1oaekgrzm)" height="96" id="context" style="stroke:#A80036;stroke-width:3.0;" width="148" x="1551" y="14"/><ellipse cx="1581" cy="46" fill="#ADD1B2" rx="22" ry="22" style="stroke:#A80036;stroke-width:2.0;"/><path d="M1585.9463,58.2861 Q1584.7842,58.8838 1583.5059,59.1826 Q1582.2275,59.4814 1580.8164,59.4814 Q1575.8027,59.4814 1573.1631,56.1777 Q1570.5234,52.874 1570.5234,46.6318 Q1570.5234,40.373 1573.1631,37.0693 Q1575.8027,33.7656 1580.8164,33.7656 Q1582.2275,33.7656 1583.5225,34.0645 Q1584.8174,34.3633 1585.9463,34.9609 L1585.9463,40.4063 Q1584.6846,39.2441 1583.4976,38.7046 Q1582.3105,38.165 1581.0488,38.165 Q1578.3594,38.165 1576.9897,40.2983 Q1575.6201,42.4316 1575.6201,46.6318 Q1575.6201,50.8154 1576.9897,52.9487 Q1578.3594,55.082 1581.0488,55.082 Q1582.3105,55.082 1583.4976,54.5425 Q1584.6846,54.0029 1585.9463,52.8408 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="84" x="1609" y="55.0703">context</text><line style="stroke:#A80036;stroke-width:3.0;" x1="1553" x2="1697" y1="78" y2="78"/><line style="stroke:#A80036;stroke-width:3.0;" x1="1553" x2="1697" y1="94" y2="94"/><path d="M1769,37 L1769,54 L1699.6,62 L1769,70 L1769,87.6211 A0,0 0 0 0 1769,87.6211 L2097,87.6211 A0,0 0 0 0 2097,87.6211 L2097,57 L2077,37 L1769,37 A0,0 0 0 0 1769,37 " fill="#FBFB77" filter="url(#f1k5u1oaekgrzm)" style="stroke:#A80036;stroke-width:2.0;"/><path d="M2077,37 L2077,57 L2097,57 L2077,37 " fill="#FBFB77" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="286" x="1781" y="72.1367">environment for router</text><!--MD5=[fb8ce1c166e2a7f5bd62b857f879f358]
+class route_guide--><rect codeLine="27" fill="#FEFECE" filter="url(#f1k5u1oaekgrzm)" height="147.8203" id="route_guide" style="stroke:#A80036;stroke-width:3.0;" width="254" x="910" y="1000"/><ellipse cx="964.3" cy="1032" fill="#ADD1B2" rx="22" ry="22" style="stroke:#A80036;stroke-width:2.0;"/><path d="M969.2463,1044.2861 Q968.0842,1044.8838 966.8059,1045.1826 Q965.5275,1045.4814 964.1164,1045.4814 Q959.1027,1045.4814 956.4631,1042.1777 Q953.8234,1038.874 953.8234,1032.6318 Q953.8234,1026.373 956.4631,1023.0693 Q959.1027,1019.7656 964.1164,1019.7656 Q965.5275,1019.7656 966.8225,1020.0645 Q968.1174,1020.3633 969.2463,1020.9609 L969.2463,1026.4063 Q967.9846,1025.2441 966.7976,1024.7046 Q965.6105,1024.165 964.3488,1024.165 Q961.6594,1024.165 960.2897,1026.2983 Q958.9201,1028.4316 958.9201,1032.6318 Q958.9201,1036.8154 960.2897,1038.9487 Q961.6594,1041.082 964.3488,1041.082 Q965.6105,1041.082 966.7976,1040.5425 Q967.9846,1040.0029 969.2463,1038.8408 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="136" x="997.7" y="1041.0703">route_guide</text><line style="stroke:#A80036;stroke-width:3.0;" x1="912" x2="1162" y1="1064" y2="1064"/><line style="stroke:#A80036;stroke-width:3.0;" x1="912" x2="1162" y1="1080" y2="1080"/><ellipse cx="932" cy="1102" fill="#84BE84" rx="6" ry="6" style="stroke:#038048;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="22" lengthAdjust="spacing" textLength="160" x="950" y="1109.2695">void guide_it();</text><ellipse cx="932" cy="1127.9102" fill="#84BE84" rx="6" ry="6" style="stroke:#038048;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="22" lengthAdjust="spacing" textLength="202" x="950" y="1135.1797">void print(guide&amp;);</text><!--MD5=[b338b3d25508634ec7ece070defa0270]
+class router--><rect codeLine="11" fill="#FEFECE" filter="url(#f1k5u1oaekgrzm)" height="134.4414" id="router" style="stroke:#A80036;stroke-width:3.0;" width="406" x="834" y="264"/><ellipse cx="970.5" cy="302.2656" fill="#ADD1B2" rx="22" ry="22" style="stroke:#A80036;stroke-width:2.0;"/><path d="M975.4463,314.5518 Q974.2842,315.1494 973.0059,315.4482 Q971.7275,315.7471 970.3164,315.7471 Q965.3027,315.7471 962.6631,312.4434 Q960.0234,309.1396 960.0234,302.8975 Q960.0234,296.6387 962.6631,293.335 Q965.3027,290.0313 970.3164,290.0313 Q971.7275,290.0313 973.0225,290.3301 Q974.3174,290.6289 975.4463,291.2266 L975.4463,296.6719 Q974.1846,295.5098 972.9976,294.9702 Q971.8105,294.4307 970.5488,294.4307 Q967.8594,294.4307 966.4897,296.564 Q965.1201,298.6973 965.1201,302.8975 Q965.1201,307.0811 966.4897,309.2144 Q967.8594,311.3477 970.5488,311.3477 Q971.8105,311.3477 972.9976,310.8081 Q974.1846,310.2686 975.4463,309.1064 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="24" font-style="italic" lengthAdjust="spacing" textLength="124" x="1007.5" y="297.2031">«interface»</text><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="70" x="1034.5" y="325.4688">router</text><line style="stroke:#A80036;stroke-width:3.0;" x1="836" x2="1238" y1="340.5313" y2="340.5313"/><line style="stroke:#A80036;stroke-width:3.0;" x1="836" x2="1238" y1="356.5313" y2="356.5313"/><ellipse cx="856" cy="378.5313" fill="#84BE84" rx="6" ry="6" style="stroke:#038048;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="22" font-style="italic" lengthAdjust="spacing" textLength="354" x="874" y="385.8008">guide make_guide(context&amp; ctx);</text><!--MD5=[0362508ee1e80609da2b1af5bdbcfded]
+class by_walk--><rect codeLine="36" fill="#FEFECE" filter="url(#f1k5u1oaekgrzm)" height="121.9102" id="by_walk" style="stroke:#A80036;stroke-width:3.0;" width="406" x="1184" y="724"/><ellipse cx="1332.5" cy="756" fill="#ADD1B2" rx="22" ry="22" style="stroke:#A80036;stroke-width:2.0;"/><path d="M1337.4463,768.2861 Q1336.2842,768.8838 1335.0059,769.1826 Q1333.7275,769.4814 1332.3164,769.4814 Q1327.3027,769.4814 1324.6631,766.1777 Q1322.0234,762.874 1322.0234,756.6318 Q1322.0234,750.373 1324.6631,747.0693 Q1327.3027,743.7656 1332.3164,743.7656 Q1333.7275,743.7656 1335.0225,744.0645 Q1336.3174,744.3633 1337.4463,744.9609 L1337.4463,750.4063 Q1336.1846,749.2441 1334.9976,748.7046 Q1333.8105,748.165 1332.5488,748.165 Q1329.8594,748.165 1328.4897,750.2983 Q1327.1201,752.4316 1327.1201,756.6318 Q1327.1201,760.8154 1328.4897,762.9487 Q1329.8594,765.082 1332.5488,765.082 Q1333.8105,765.082 1334.9976,764.5425 Q1336.1846,764.0029 1337.4463,762.8408 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="92" x="1373.5" y="765.0703">by_walk</text><line style="stroke:#A80036;stroke-width:3.0;" x1="1186" x2="1588" y1="788" y2="788"/><line style="stroke:#A80036;stroke-width:3.0;" x1="1186" x2="1588" y1="804" y2="804"/><ellipse cx="1206" cy="826" fill="#84BE84" rx="6" ry="6" style="stroke:#038048;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="22" font-style="italic" lengthAdjust="spacing" textLength="354" x="1224" y="833.2695">guide make_guide(context&amp; ctx);</text><!--MD5=[fe89d647fc68f46e5445f6187085e72e]
+class by_transit--><rect codeLine="39" fill="#FEFECE" filter="url(#f1k5u1oaekgrzm)" height="121.9102" id="by_transit" style="stroke:#A80036;stroke-width:3.0;" width="406" x="14" y="724"/><ellipse cx="152.5" cy="756" fill="#ADD1B2" rx="22" ry="22" style="stroke:#A80036;stroke-width:2.0;"/><path d="M157.4463,768.2861 Q156.2842,768.8838 155.0059,769.1826 Q153.7275,769.4814 152.3164,769.4814 Q147.3027,769.4814 144.6631,766.1777 Q142.0234,762.874 142.0234,756.6318 Q142.0234,750.373 144.6631,747.0693 Q147.3027,743.7656 152.3164,743.7656 Q153.7275,743.7656 155.0225,744.0645 Q156.3174,744.3633 157.4463,744.9609 L157.4463,750.4063 Q156.1846,749.2441 154.9976,748.7046 Q153.8105,748.165 152.5488,748.165 Q149.8594,748.165 148.4897,750.2983 Q147.1201,752.4316 147.1201,756.6318 Q147.1201,760.8154 148.4897,762.9487 Q149.8594,765.082 152.5488,765.082 Q153.8105,765.082 154.9976,764.5425 Q156.1846,764.0029 157.4463,762.8408 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="112" x="193.5" y="765.0703">by_transit</text><line style="stroke:#A80036;stroke-width:3.0;" x1="16" x2="418" y1="788" y2="788"/><line style="stroke:#A80036;stroke-width:3.0;" x1="16" x2="418" y1="804" y2="804"/><ellipse cx="36" cy="826" fill="#84BE84" rx="6" ry="6" style="stroke:#038048;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="22" font-style="italic" lengthAdjust="spacing" textLength="354" x="54" y="833.2695">guide make_guide(context&amp; ctx);</text><!--MD5=[620890577d450e792c35262ee2c7292e]
+class by_drive--><rect codeLine="42" fill="#FEFECE" filter="url(#f1k5u1oaekgrzm)" height="121.9102" id="by_drive" style="stroke:#A80036;stroke-width:3.0;" width="406" x="490" y="724"/><ellipse cx="635.5" cy="756" fill="#ADD1B2" rx="22" ry="22" style="stroke:#A80036;stroke-width:2.0;"/><path d="M640.4463,768.2861 Q639.2842,768.8838 638.0059,769.1826 Q636.7275,769.4814 635.3164,769.4814 Q630.3027,769.4814 627.6631,766.1777 Q625.0234,762.874 625.0234,756.6318 Q625.0234,750.373 627.6631,747.0693 Q630.3027,743.7656 635.3164,743.7656 Q636.7275,743.7656 638.0225,744.0645 Q639.3174,744.3633 640.4463,744.9609 L640.4463,750.4063 Q639.1846,749.2441 637.9976,748.7046 Q636.8105,748.165 635.5488,748.165 Q632.8594,748.165 631.4897,750.2983 Q630.1201,752.4316 630.1201,756.6318 Q630.1201,760.8154 631.4897,762.9487 Q632.8594,765.082 635.5488,765.082 Q636.8105,765.082 637.9976,764.5425 Q639.1846,764.0029 640.4463,762.8408 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="98" x="676.5" y="765.0703">by_drive</text><line style="stroke:#A80036;stroke-width:3.0;" x1="492" x2="894" y1="788" y2="788"/><line style="stroke:#A80036;stroke-width:3.0;" x1="492" x2="894" y1="804" y2="804"/><ellipse cx="512" cy="826" fill="#84BE84" rx="6" ry="6" style="stroke:#038048;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="22" font-style="italic" lengthAdjust="spacing" textLength="354" x="530" y="833.2695">guide make_guide(context&amp; ctx);</text><path d="M439,306 L439,356.6211 A0,0 0 0 0 439,356.6211 L763,356.6211 A0,0 0 0 0 763,356.6211 L763,342 L833.58,331 L763,326 L763,326 L743,306 L439,306 A0,0 0 0 0 439,306 " fill="#FBFB77" filter="url(#f1k5u1oaekgrzm)" style="stroke:#A80036;stroke-width:2.0;"/><path d="M743,306 L743,326 L763,326 L743,306 " fill="#FBFB77" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="282" x="451" y="341.1367">The strategy interface.</text><path d="M805,614 L805,664.6211 L1269,664.6211 L1269,634 L1249,614 L805,614 " fill="#FBFB77" filter="url(#f1k5u1oaekgrzm)" style="stroke:#A80036;stroke-width:2.0;"/><path d="M1249,614 L1249,634 L1269,634 L1249,614 " fill="#FBFB77" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="422" x="817" y="649.1367">guide_it() -&gt; router.make_guide()</text><!--MD5=[8c17e16101d957fdc8b8c3a4d3f7377d]
+link context to route_guide--><path codeLine="9" d="M1660.34,148.88 C1678.56,200.12 1697,267.24 1697,329 C1697,329 1697,329 1697,787 C1697,1001.4 1188.2246,1070.2372 1188.2246,1070.2372 " fill="none" id="context-route_guide" style="stroke:#A80036;stroke-width:2.0;"/><polygon points="1164.26,1071.54,1176.6766,1078.8768,1188.2246,1070.2372,1175.808,1062.9004,1164.26,1071.54" style="stroke:#A80036;stroke-width:2.0;fill:none;"/><polygon fill="none" points="1647,153.2,1645.82,110.82,1673.16,143.22,1647,153.2" style="stroke:#A80036;stroke-width:2.0;"/><!--MD5=[870b221cabff4842d3ad91051b0ea620]
+reverse link router to by_walk--><path codeLine="14" d="M1139.96,426 C1193.54,477.84 1257.54,545.62 1305,614 C1328.62,648.02 1348.98,689.88 1363.5,723.42 " fill="none" id="router-backto-by_walk" style="stroke:#A80036;stroke-width:2.0;"/><polygon fill="none" points="1130.02,435.86,1110.66,398.16,1149.3,415.56,1130.02,435.86" style="stroke:#A80036;stroke-width:2.0;"/><!--MD5=[555b9eb276d0248097a05f2fc3767472]
+reverse link router to by_transit--><path codeLine="15" d="M882.42,417.82 C719.5,507.24 467.16,645.72 324.62,723.94 " fill="none" id="router-backto-by_transit" style="stroke:#A80036;stroke-width:2.0;"/><polygon fill="none" points="875.96,405.4,917.76,398.44,889.44,429.96,875.96,405.4" style="stroke:#A80036;stroke-width:2.0;"/><!--MD5=[4a1bc5777f5b86f39d54412f2b3292d0]
+reverse link router to by_drive--><path codeLine="16" d="M932.68,425.96 C879,477.6 815.3,545.18 769,614 C746.2,647.9 727.32,689.76 714.08,723.34 " fill="none" id="router-backto-by_drive" style="stroke:#A80036;stroke-width:2.0;"/><polygon fill="none" points="923.38,415.5,962.1,398.28,942.58,435.88,923.38,415.5" style="stroke:#A80036;stroke-width:2.0;"/><!--MD5=[a0e4b81d772964b271a1e5b7e5d336b7]
+link context to router--><path codeLine="17" d="M1528.6388,107.4197 C1528.6388,107.4197 1203.591,253.9422 1203.591,253.9422 " fill="none" id="context-router" style="stroke:#A80036;stroke-width:2.0;"/><polygon points="1181.7,263.78,1195.9248,266.1581,1203.591,253.9422,1189.3663,251.5641,1181.7,263.78" style="stroke:#A80036;stroke-width:2.0;fill:none;"/><polygon fill="#A80036" points="1550.52,97.56,1536.2928,95.1961,1528.6388,107.4197,1542.866,109.7836,1550.52,97.56" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#808080" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="72" x="1385" y="197.1367">«use»</text><!--MD5=[108a1bf5ed080aaba275f07cfcf3ccb0]
+link guide to router--><path codeLine="18" d="M1037,134.16 C1037,134.16 1037,239.52 1037,239.52 " fill="none" id="guide-router" style="stroke:#A80036;stroke-width:2.0;"/><polygon points="1037,263.52,1045,251.52,1037,239.52,1029,251.52,1037,263.52" style="stroke:#A80036;stroke-width:2.0;fill:none;"/><polygon fill="#A80036" points="1037,110.16,1029,122.16,1037,134.16,1045,122.16,1037,110.16" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#808080" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="72" x="1039" y="197.1367">«use»</text><!--MD5=[c65445473480467377dcbad9dfbc7192]
+link router to N2--><path codeLine="22" d="M1037,398.22 C1037,465.9 1037,568.14 1037,613.68 " fill="none" id="router-N2" style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><text fill="#808080" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="72" x="1039" y="485.1367">«use»</text><!--MD5=[a2fda319b0192a014efd6ccec0ab62d6]
+link N2 to route_guide--><path codeLine="23" d="M1037,664.18 C1037,726.6 1037,900.24 1037,999.66 " fill="none" id="N2-route_guide" style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><text fill="#808080" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="72" x="1039" y="795.1367">«use»</text><!--MD5=[3e9fa4d70be6fe4096b02bf12ace6bf0]
+link by_walk to route_guide--><path codeLine="32" d="M1314.48,846.06 C1259.62,890.72 1184,952.3 1125.56,999.88 " fill="none" id="by_walk-route_guide" style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><text fill="#808080" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="72" x="1233" y="933.1367">«use»</text><!--MD5=[bcbe8274b207c543da37e8729e4b995d]
+link by_transit to route_guide--><path codeLine="33" d="M386.9,846.06 C542.42,900.1 769.08,978.88 909.56,1027.7 " fill="none" id="by_transit-route_guide" style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><text fill="#808080" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="72" x="655" y="933.1367">«use»</text><!--MD5=[614d5ff18a07c355c6de51c5aa12967a]
+link by_drive to route_guide--><path codeLine="34" d="M764.28,846.06 C818.2,890.72 892.52,952.3 949.96,999.88 " fill="none" id="by_drive-route_guide" style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:7.0,7.0;"/><text fill="#808080" font-family="sans-serif" font-size="26" lengthAdjust="spacing" textLength="72" x="879" y="933.1367">«use»</text><!--MD5=[26ad38fd0ceea479b8f877cb4b0ccca4]
+@startuml
+'https://plantuml.com/class-diagram
+skinparam backgroundcolor transparent
+
+class guide
+note right: the result class
+
+class context
+note right: environment for router
+context <|- -o route_guide
+
+class router << interface >>{
++guide {abstract} make_guide(context& ctx);
+}
+router <|- - - by_walk
+router <|- - - by_transit
+router <|- - - by_drive
+context *- -o router: <color:gray><<use>></color>
+guide *- -o router: <color:gray><<use>></color>
+note left of router : The strategy interface.
+
+note "guide_it() -> router.make_guide()" as N2
+router .. N2: <color:gray><<use>></color>
+N2 .. route_guide: <color:gray><<use>></color>
+'note "This is a floating note" as F2
+'route_guide .. F2
+
+class route_guide{
++void guide_it();
++void print(guide&);
+}
+
+by_walk .. route_guide: <color:gray><<use>></color>
+by_transit .. route_guide: <color:gray><<use>></color>
+by_drive .. route_guide: <color:gray><<use>></color>
+
+class by_walk{
++guide {abstract} make_guide(context& ctx);
+}
+class by_transit{
++guide {abstract} make_guide(context& ctx);
+}
+class by_drive{
++guide {abstract} make_guide(context& ctx);
+}
+
+@enduml
+
+@startuml
+skinparam backgroundcolor transparent
+
+class guide
+note right: the result class
+
+class context
+note right: environment for router
+context <|- -o route_guide
+
+class router << interface >>{
++guide {abstract} make_guide(context& ctx);
+}
+router <|- - - by_walk
+router <|- - - by_transit
+router <|- - - by_drive
+context *- -o router: <color:gray><<use>></color>
+guide *- -o router: <color:gray><<use>></color>
+note left of router : The strategy interface.
+
+note "guide_it() -> router.make_guide()" as N2
+router .. N2: <color:gray><<use>></color>
+N2 .. route_guide: <color:gray><<use>></color>
+
+class route_guide{
++void guide_it();
++void print(guide&);
+}
+
+by_walk .. route_guide: <color:gray><<use>></color>
+by_transit .. route_guide: <color:gray><<use>></color>
+by_drive .. route_guide: <color:gray><<use>></color>
+
+class by_walk{
++guide {abstract} make_guide(context& ctx);
+}
+class by_transit{
++guide {abstract} make_guide(context& ctx);
+}
+class by_drive{
++guide {abstract} make_guide(context& ctx);
+}
+
+@enduml
+
+PlantUML version 1.2021.7(Sun May 23 20:40:07 CST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: CN
+--></g></svg>

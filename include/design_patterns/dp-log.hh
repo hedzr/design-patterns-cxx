@@ -29,7 +29,7 @@ namespace dp::log {
             explicit Log(typename util::singleton<Log>::token) {}
             ~Log() = default;
 
-            // [[maybe_unused]] hicc::terminal::colors::colorize _c;
+            // [[maybe_unused]] dp::terminal::colors::colorize _c;
 
             template<class... Args>
             void log([[maybe_unused]] const char *fmt, [[maybe_unused]] Args const &...args) {
@@ -146,12 +146,15 @@ namespace dp::log {
     // Logger log;
 } // namespace dp::log
 
+#if !defined(dbg_print)
 #if defined(_MSC_VER)
 #define dbg_print(...) dp::log::holder(__FILE__, __LINE__, __FUNCSIG__)(__VA_ARGS__)
 #else
 #define dbg_print(...) dp::log::holder(__FILE__, __LINE__, __PRETTY_FUNCTION__)(__VA_ARGS__)
 #endif
+#endif // !defined(dbg_print)
 
+#if !defined(dbg_debug)
 #if defined(_DEBUG)
 #if defined(_MSC_VER)
 #define dbg_debug(...) dp::log::holder(__FILE__, __LINE__, __FUNCSIG__)(__VA_ARGS__)
@@ -170,12 +173,14 @@ namespace dp::log {
     _Pragma("GCC diagnostic pop")
 #endif
 #endif
+#endif // !defined(dbg_debug)
 
-#if defined(HICC_ENABLE_VERBOSE_LOG)
+#if defined(DP_CXX_ENABLE_VERBOSE_LOG)
+#if !defined(dbg_verbose_debug)
 // inline void debug(char const *fmt, ...) {
 //     va_list va;
 //     va_start(va, fmt);
-//     hicc::log::log::vdebug(fmt, va);
+//     dp::log::log::vdebug(fmt, va);
 //     va_end(va);
 // }
 #if defined(_MSC_VER)
@@ -195,7 +200,9 @@ namespace dp::log {
 template<typename... Args>
 inline void dbg_verbose_debug([[maybe_unused]] Args &&...args) { (void) (sizeof...(args)); }
 #endif
+#endif //!defined(dbg_verbose_debug)
+#if !defined(dbg_trace)
 #define dbg_trace dbg_verbose_debug
-
+#endif // !defined(dbg_trace)
 
 #endif //DESIGN_PATTERNS_CXX_DP_LOG_HH

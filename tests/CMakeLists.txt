@@ -80,11 +80,46 @@ function(define_test_program name)
 endfunction()
 
 define_test_program(detects detects.cc)
-define_test_program(partial_curry partial_curry.cc)
+define_test_program(partial-curry partial-curry.cc)
+define_test_program(lambda lambda.cc)
+define_test_program(type-name type-name.cc)
+define_test_program(type-name-2 type-name-2.cc)
 
 define_test_program(basic basic.cc)
 #define_test_program(undo undo.cc)
+define_test_program(tree tree.cc)
 
+
+define_test_program(dp-state dp-state.cc)
+define_test_program(dp-factory dp-factory.cc)     # factory
+define_test_program(dp-builder dp-builder.cc)     # builder
+define_test_program(dp-flyweight dp-flyweight.cc) # flyweight
+define_test_program(dp-visitor dp-visitor.cc)
+define_test_program(dp-observer dp-observer.cc)
+define_test_program(dp-slot dp-slot.cc)
+define_test_program(dp-strategy dp-strategy.cc)
+define_test_program(dp-memento dp-memento.cc)
+define_test_program(dp-mediator dp-mediator.cc)
+define_test_program(dp-responsibility-chain dp-responsibility-chain.cc)
+
+define_test_program(rx dp-rx.cc)
+define_test_program(msg-dispatch msg-dispatch.cc)
+
+
+#
+
+
+#define_test_program(cxx20-coroutine cxx20-coroutine.cc)
+#add_cxx_20_to(test-cxx20-coroutine)
+
+define_test_program(cxx20-one
+        cxx20-one.cc
+        cxx20-one/v1.cc
+        cxx20-one/mod1/mod.cc
+        cxx20-one/mod2/mod.cc
+        cxx20-one/mod3/mod.cc
+        )
+add_cxx_20_to(test-cxx20-one)
 
 
 message(STATUS "END of tests")

@@ -5,28 +5,27 @@
 // Read /LICENSE for more information.
 
 //
-// Created by Hedzr Yeh on 2021/9/26.
+// Created by Hedzr Yeh on 2021/10/18.
 //
 
-#include "design_patterns_cxx.hh"
+#include "design_patterns/dp-def.hh"
+
+#include "design_patterns/dp-debug.hh" // type_name<T>
+
+#include <list>
+#include <stack>
+#include <string>
+#include <string_view>
+#include <vector>
 
 #include <iostream>
 #include <math.h>
-#include <string>
 
 #include <functional>
 #include <memory>
 #include <random>
 
-namespace dp { namespace state { namespace basic {
-}}} // namespace dp::state::basic
-namespace dp { namespace state { namespace bugs {
-    int v = 0;
-}}} // namespace dp::state::bugs
-
-void test_state_basic() {
-    using namespace dp::state::basic;
-}
+#include <mutex>
 
 namespace lambdas {
     void f(int n1, int n2, int n3, const int &n4, int n5) {
@@ -101,21 +100,89 @@ void test_lock_guard() {
         mu.unlock();
         std::lock_guard<std::mutex> lock(mu);
     }
-    {
-        dp::util::cool::lock_guard<std::mutex> lock;
-    }
-    {
-        dp::util::cool::lock_guard<void> lock;
-    }
 }
 
+namespace {
+    template<class T>
+    class Y {
+    public:
+        template<typename Q = T>
+        typename std::enable_if<std::is_same<Q, double>::value || std::is_same<Q, float>::value, Q>::type foo() {
+            return 11;
+        }
+        template<typename Q = T>
+        typename std::enable_if<!std::is_same<Q, double>::value && !std::is_same<Q, float>::value, Q>::type foo() {
+            return 7;
+        }
+    };
+} // namespace
+
+void test_Y_typ_is_float_number() {
+
+#define TestQ(typ)                                                      \
+    std::cout << "T foo() for " << dp::debug::type_name<typ>() << " : " \
+              << Y<typ>{}.foo() << ", type: "                           \
+              << dp::debug::type_name<decltype(std::declval<Y<typ>>().foo())>() << '\n'
+
+    TestQ(short);
+    TestQ(int);
+    TestQ(long);
+    TestQ(bool);
+    TestQ(float);
+    TestQ(double);
+}
+
+// -------------------
+
+class foo;
+class bar;
+
+template<class T>
+struct is_bar {
+    template<class Q = T>
+    typename std::enable_if<std::is_same<Q, bar>::value, bool>::type check() { return true; }
+
+    template<class Q = T>
+    typename std::enable_if<!std::is_same<Q, bar>::value, bool>::type check() { return false; }
+};
+
+void test_is_bar() {
+    is_bar<foo> foo_is_bar;
+    is_bar<bar> bar_is_bar;
+    if (!foo_is_bar.check() && bar_is_bar.check())
+        std::cout << "It works!" << std::endl;
+}
+
+// -------------------
+
+template<typename T, typename = void>
+struct has_typed_value;
+
+template<typename T>
+struct has_typed_value<T, typename std::enable_if<T::value>::type> {
+    static constexpr bool value = T::value;
+};
+
+template<class T>
+inline constexpr bool has_typed_value_v = has_typed_value<T>::value;
+
+static_assert(has_typed_value<std::is_same<bool, bool>>::value, "std::is_same<bool, bool>::value is valid");
+static_assert(has_typed_value_v<std::is_same<bool, bool>>, "std::is_same<bool, bool>::value is valid");
+
+// static_assert(check_sth_v<int>, "int::value illegal");
+// static_assert(check_sth_v<check_sth<xv>>, "xv::value illegal");
+
+
+struct xv {
+    bool value{true};
+};
+
 int main() {
+    test_is_bar();
+    test_Y_typ_is_float_number();
 
     test_lock_guard();
-
     lambdas::test_lambdas();
-    
-    test_state_basic();
 
     return 0;
 }

@@ -34,14 +34,26 @@ set(DP_CXX_detail_header_files
 set(DP_CXX_header_files
         ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns_cxx.hh
         ${CMAKE_GENERATED_DIR}/${PROJECT_NAME}-version.hh
+        ${CMAKE_GENERATED_DIR}/${PROJECT_NAME}-config.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-assert.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-chrono.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-common.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-config.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-debug.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-def.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-if.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-log.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-util.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-x-class.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns/dp-x-test.hh
         )
 define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
 
 
-#project(undo_cxx)
-#set(PROJECT_MACRO_PREFIX UNDO_CXX)
-#set(UNDO_CXX_detail_header_files
+#project(design_patterns_cxx)
+#set(PROJECT_MACRO_PREFIX DP_CXX)
+#set(DP_CXX_detail_header_files
 #        ${CMAKE_CURRENT_SOURCE_DIR}/include/undo_cxx/detail/undo-if.hh
 #        )
 #set(UNDO_CXX_header_files

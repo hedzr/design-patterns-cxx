@@ -11,6 +11,9 @@
 #ifndef _PRIVATE_VAR_FOLDERS_DP_CONFIG_HH
 #define _PRIVATE_VAR_FOLDERS_DP_CONFIG_HH
 
+#include "design_patterns_cxx-config.hh"
+#include "design_patterns_cxx-version.hh"
+
 #define DP_CONFIG_HH_MACRO
 
 #endif // _PRIVATE_VAR_FOLDERS_DP_CONFIG_HH

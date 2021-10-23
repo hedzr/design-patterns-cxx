@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam backgroundcolor transparent
+
+class guide
+note right: the result class
+
+class context
+note right: environment for router
+context <|--o route_guide
+
+class router << interface >>{
++guide {abstract} make_guide(context& ctx);
+}
+router <|--- by_walk
+router <|--- by_transit
+router <|--- by_drive
+context *--o router: <color:gray><<use>></color>
+guide *--o router: <color:gray><<use>></color>
+note left of router : The strategy interface.
+
+note "guide_it() -> router.make_guide()" as N2
+router .. N2: <color:gray><<use>></color>
+N2 .. route_guide: <color:gray><<use>></color>
+'note "This is a floating note" as F2
+'route_guide .. F2
+
+class route_guide{
++void guide_it();
++void print(guide&);
+}
+
+by_walk .. route_guide: <color:gray><<use>></color>
+by_transit .. route_guide: <color:gray><<use>></color>
+by_drive .. route_guide: <color:gray><<use>></color>
+
+class by_walk{
++guide {abstract} make_guide(context& ctx);
+}
+class by_transit{
++guide {abstract} make_guide(context& ctx);
+}
+class by_drive{
++guide {abstract} make_guide(context& ctx);
+}
+
+@enduml

@@ -1,14 +1,13 @@
-// design_patterns_cxx Library
-// Copyright © 2021 Hedzr Yeh.
 //
-// This file is released under the terms of the MIT license.
-// Read /LICENSE for more information.
-
-//
-// Created by Hedzr Yeh on 2021/9/26.
+// Created by Hedzr Yeh on 2021/9/7.
 //
 
-#include "design_patterns_cxx.hh"
+#include "design_patterns/dp-def.hh"
+
+#include "design_patterns/dp-debug.hh"
+#include "design_patterns/dp-log.hh"
+#include "design_patterns/dp-util.hh"
+#include "design_patterns/dp-x-test.hh"
 
 #include <iostream>
 #include <math.h>
@@ -18,11 +17,8 @@
 #include <memory>
 #include <random>
 
-namespace dp { namespace state { namespace basic {
-}}} // namespace dp::state::basic
-namespace dp { namespace state { namespace bugs {
-    int v = 0;
-}}} // namespace dp::state::bugs
+namespace dp::state::basic {
+}
 
 void test_state_basic() {
     using namespace dp::state::basic;
@@ -95,27 +91,12 @@ namespace lambdas {
     }
 } // namespace lambdas
 
-void test_lock_guard() {
-    {
-        std::mutex mu;
-        mu.unlock();
-        std::lock_guard<std::mutex> lock(mu);
-    }
-    {
-        dp::util::cool::lock_guard<std::mutex> lock;
-    }
-    {
-        dp::util::cool::lock_guard<void> lock;
-    }
-}
 
 int main() {
 
-    test_lock_guard();
-
-    lambdas::test_lambdas();
-    
-    test_state_basic();
+    DP_TEST_FOR(lambdas::test_lambdas);
+    DP_TEST_FOR(test_state_basic);
+    // DP_TEST_FOR(hmeta::test_state_meta);
 
     return 0;
 }

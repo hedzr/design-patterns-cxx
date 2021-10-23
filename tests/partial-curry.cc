@@ -1,4 +1,4 @@
-// undo_cxx Library
+// design_patterns_cxx Library
 // Copyright © 2021 Hedzr Yeh.
 //
 // This file is released under the terms of the MIT license.
