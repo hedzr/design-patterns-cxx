@@ -95,7 +95,7 @@ set(${PROJ_NAME}_LIBRARIES ${PROJ_NAME})
             ${CONFIG_PACKAGE_INSTALL_DIR})
 
     # Only export target when using imported targets
-    if (FSM_CXX_HAS_IMPORTED_TARGETS)
+    if (${${PROJ_PREFIX}_HAS_IMPORTED_TARGETS})
 
         install(TARGETS ${PROJ_NAME}
                 EXPORT ${PROJ_NAME}-targets

@@ -69,10 +69,10 @@ define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
 #define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
 
 
-#### TESTS ##################################################
-
-if (${DP_CXX_BUILD_TESTS_EXAMPLES} OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
-    enable_testing()
-    add_subdirectory(examples/)
-    add_subdirectory(tests/)
-endif ()
+##### TESTS ##################################################
+#
+#if (${DP_CXX_BUILD_TESTS_EXAMPLES} OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
+#    enable_testing()
+#    add_subdirectory(examples/)
+#    add_subdirectory(tests/)
+#endif ()
