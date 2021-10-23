@@ -221,24 +221,31 @@ namespace dp::command::app {
 
     public:
         using Editor = editor::editor<>;
-        clipboard<Editor> clipboard;
-        editors_holder<Editor> editors;
+        template<class T>
+        using Clipboard = clipboard<T>;
+        const editors_holder<Editor> &editors() const { return _editors; }
+        editors_holder<Editor> &editors() { return _editors; }
+        const Clipboard<Editor> &clipboard() const { return _clipboard; }
+        Clipboard<Editor> &clipboard() { return _clipboard; }
+        
+        Clipboard<Editor> _clipboard;
+        editors_holder<Editor> _editors;
     };
 
 } // namespace dp::command::app
 
 namespace dp::command::basic::commands {
     inline void copy_command::do_execute() {
-        auto &curr_editor = dp::command::app::app::instance().editors.current();
-        app::app::instance().clipboard.copy(curr_editor);
+        auto &curr_editor = dp::command::app::app::instance().editors().current();
+        app::app::instance().clipboard().copy(curr_editor);
     }
     inline void cut_command::do_execute() {
-        auto &curr_editor = dp::command::app::app::instance().editors.current();
-        app::app::instance().clipboard.cut(curr_editor);
+        auto &curr_editor = dp::command::app::app::instance().editors().current();
+        app::app::instance().clipboard().cut(curr_editor);
     }
     inline void paste_command::do_execute() {
-        auto &curr_editor = dp::command::app::app::instance().editors.current();
-        app::app::instance().clipboard.paste(curr_editor);
+        auto &curr_editor = dp::command::app::app::instance().editors().current();
+        app::app::instance().clipboard().paste(curr_editor);
     }
 } // namespace dp::command::basic::commands
 
@@ -246,8 +253,8 @@ void test_command_basic() {
     using namespace dp::command::basic;
     using namespace dp::command::editor;
     auto &app = dp::command::app::app::instance();
-    app.editors.add(editor<>{});
-    auto &curr_editor = app.editors.current();
+    app.editors().add(editor<>{});
+    auto &curr_editor = app.editors().current();
     curr_editor.enter_loop();
 }
 
