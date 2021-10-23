@@ -36,12 +36,12 @@
 
 #include <math.h>
 
-#include "design_patterns/dp-def.hh"
+#include "design_patterns_cxx/dp-def.hh"
 
-#include "design_patterns/dp-debug.hh"
-#include "design_patterns/dp-log.hh"
-#include "design_patterns/dp-util.hh"
-#include "design_patterns/dp-x-test.hh"
+#include "design_patterns_cxx/dp-debug.hh"
+#include "design_patterns_cxx/dp-log.hh"
+#include "design_patterns_cxx/dp-util.hh"
+#include "design_patterns_cxx/dp-x-test.hh"
 
 namespace dp::rx::basic {
 }

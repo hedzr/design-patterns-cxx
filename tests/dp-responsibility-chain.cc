@@ -8,10 +8,10 @@
 // Created by Hedzr Yeh on 2021/10/20.
 //
 
-#include "design_patterns/dp-resp-chain.hh"
+#include "design_patterns_cxx/dp-resp-chain.hh"
 
-#include "design_patterns/dp-log.hh"
-#include "design_patterns/dp-x-test.hh"
+#include "design_patterns_cxx/dp-log.hh"
+#include "design_patterns_cxx/dp-x-test.hh"
 
 #include <utility>
 

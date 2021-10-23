@@ -8,8 +8,8 @@
 // Created by Hedzr Yeh on 2021/10/18.
 //
 
-#include "design_patterns/dp-util.hh"
-#include "design_patterns/dp-x-test.hh"
+#include "design_patterns_cxx/dp-util.hh"
+#include "design_patterns_cxx/dp-x-test.hh"
 
 #include <iomanip>
 #include <iostream>

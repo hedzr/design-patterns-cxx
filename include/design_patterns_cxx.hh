@@ -11,6 +11,6 @@
 #ifndef DESIGN_PATTERNS_CXX_DESIGN_PATTERNS_CXX_HH
 #define DESIGN_PATTERNS_CXX_DESIGN_PATTERNS_CXX_HH
 
-#include "design_patterns/dp.hh"
+#include "design_patterns_cxx/dp.hh"
 
 #endif //DESIGN_PATTERNS_CXX_DESIGN_PATTERNS_CXX_HH

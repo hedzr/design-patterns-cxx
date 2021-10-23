@@ -8,7 +8,7 @@
 // Created by Hedzr Yeh on 2021/10/18.
 //
 
-#include "design_patterns/dp-debug.hh" // type_name<T>
+#include "design_patterns_cxx/dp-debug.hh" // type_name<T>
 
 #include <iostream>
 #include <vector>

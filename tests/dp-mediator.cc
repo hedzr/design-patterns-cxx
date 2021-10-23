@@ -8,13 +8,13 @@
 // Created by Hedzr Yeh on 2021/10/18.
 //
 
-#include "design_patterns/dp-mediator.hh"
+#include "design_patterns_cxx/dp-mediator.hh"
 
-#include "design_patterns/dp-def.hh"
+#include "design_patterns_cxx/dp-def.hh"
 
-#include "design_patterns/dp-debug.hh" // type_name<T>
-#include "design_patterns/dp-log.hh"
-#include "design_patterns/dp-x-test.hh"
+#include "design_patterns_cxx/dp-debug.hh" // type_name<T>
+#include "design_patterns_cxx/dp-log.hh"
+#include "design_patterns_cxx/dp-x-test.hh"
 
 
 #include <algorithm>

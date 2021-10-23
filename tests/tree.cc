@@ -8,11 +8,11 @@
 // Created by Hedzr Yeh on 2021/10/20.
 //
 
-#include "design_patterns/dp-tree.hh"
+#include "design_patterns_cxx/dp-tree.hh"
 
-#include "design_patterns/dp-log.hh"
-#include "design_patterns/dp-util.hh"
-#include "design_patterns/dp-x-test.hh"
+#include "design_patterns_cxx/dp-log.hh"
+#include "design_patterns_cxx/dp-util.hh"
+#include "design_patterns_cxx/dp-x-test.hh"
 
 void test_rb_tree() {
     dp::tree::rb_tree t;
