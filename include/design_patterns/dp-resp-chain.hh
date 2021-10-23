@@ -16,6 +16,7 @@
 #include <memory>
 
 #include <optional>
+#include <vector>
 
 namespace dp::resp_chain {
 
