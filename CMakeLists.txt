@@ -12,6 +12,20 @@ include(prerequisites)
 include(dummy-project)
 
 
+set(PROJECT_MACRO_NAME design_patterns_cxx)
+set(PROJECT_MACRO_SHORT_NAME dp)
+set(PROJECT_MACRO_MID_NAME dp-cxx)
+set(PROJECT_MACRO_PREFIX "DP_CXX")
+#gen_versions(${PROJECT_MACRO_NAME} ${PROJECT_MACRO_PREFIX}
+#        ${PROJECT_MACRO_SHORT_NAME}-version.hh
+#        ${PROJECT_MACRO_SHORT_NAME}-config.hh
+#        ${PROJECT_MACRO_SHORT_NAME}-${PROJECT_VERSION}
+#        ${CMAKE_SOURCE_DIR}/${CMAKE_SCRIPTS}/version.h.in
+#        ${CMAKE_SOURCE_DIR}/${CMAKE_SCRIPTS}/config-base.h.in
+#        )
+
+
+
 #### OPTIONS ##################################################
 
 option(OK "PL-OK" ON)
@@ -26,11 +40,10 @@ option(DP_CXX_ENABLE_PRECONDITION_CHECKS "Enable Precondition Checks-OK" ON)
 #### PROJECTS ##################################################
 
 
-project(design_patterns_cxx
+project(${PROJECT_MACRO_NAME}
         VERSION ${VERSION}
         DESCRIPTION "design-patterns-cxx repo."
         LANGUAGES CXX)
-set(PROJECT_MACRO_PREFIX DP_CXX)
 set(DP_CXX_detail_header_files
         #${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns_cxx/detail/dp-if.hh
         )
