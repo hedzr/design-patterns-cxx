@@ -32,6 +32,7 @@ macro(define_cxx_project PROJ_NAME PROJ_PREFIX)
 
     gen_versions(${PROJ_NAME} ${PROJ_PREFIX}
             ${PROJ_NAME}-version.hh
+            ${PROJ_NAME}-config.hh
             ${PROJ_NAME}-${PROJECT_VERSION}
             ${CMAKE_SOURCE_DIR}/${CMAKE_SCRIPTS}/version.h.in
             ${CMAKE_SOURCE_DIR}/${CMAKE_SCRIPTS}/config-base.h.in
@@ -120,9 +121,69 @@ set(${PROJ_NAME}_LIBRARIES ${PROJ_NAME})
 
     option(${PROJ_PREFIX}_BUILD_DOCS "generate documentation" OFF)
     if (${PROJ_PREFIX}_BUILD_DOCS OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
-        add_subdirectory(docs/)
+        if (EXISTS docs/)
+            find_package(Doxygen)
+            if (NOT DOXYGEN_FOUND)
+                set(${PROJ_PREFIX}_BUILD_DOCS OFF)
+            else ()
+                if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+                    set(${PROJ_PREFIX}_BUILD_DOCS ON)
+                endif ()
+                if ((${USE_DEBUG}) OR ($ENV{CI_RUNNING}))
+                    set(${PROJ_PREFIX}_BUILD_DOCS OFF)
+                endif ()
+            endif ()
+            if (${PROJ_PREFIX}_BUILD_DOCS)
+                message(STATUS "- docs/ including ....")
+
+                # Find all the public headers
+                get_target_property(MY_PUBLIC_HEADER_DIR ${PROJECT_MACRO_NAME} INTERFACE_INCLUDE_DIRECTORIES)
+                file(GLOB_RECURSE MY_PUBLIC_HEADERS ${MY_PUBLIC_HEADER_DIR}/*.hh)
+                debug_print_list_value(MY_PUBLIC_HEADER_DIR)
+                debug_print_value(PROJECT_SOURCE_DIR)
+
+                #set(DOXYGEN_INPUT_DIR ${PROJECT_SOURCE_DIR} )
+                set(DOXYGEN_INPUT_DIR ${PROJECT_SOURCE_DIR}/)
+                set(DOXYGEN_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen)
+                #set(DOXYGEN_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/doxygen)
+                set(DOXYFILE_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen/Doxyfile)
+                set(DOXYGEN_INDEX_FILE ${DOXYGEN_OUTPUT_DIR}/html/index.html)
+                set(DOXYFILE_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/${PROJECT_MACRO_MID_NAME}.in.doxygen)
+
+                #Replace variables inside @@ with the current values
+                configure_file(${DOXYFILE_IN} ${DOXYFILE_OUT} @ONLY)
+
+                file(MAKE_DIRECTORY ${DOXYGEN_OUTPUT_DIR}) #Doxygen won't create this for us
+                add_custom_command(OUTPUT ${DOXYGEN_INDEX_FILE}
+                        DEPENDS ${MY_PUBLIC_HEADERS}
+                        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE_OUT}
+                        #COMMAND
+                        #  $<$<CONFIG:Release>:${DOXYGEN_EXECUTABLE} ${DOXYFILE_OUT}>
+                        #  $<$<NOT:$<CONFIG:Release>>:${CMAKE_COMMAND} -E "echo 'Only done in Release builds'">
+                        MAIN_DEPENDENCY ${DOXYFILE_OUT} ${DOXYFILE_IN}
+                        COMMENT "Generating docs ..."
+                        VERBATIM)
+
+                add_custom_target(Doxygen ALL DEPENDS ${DOXYGEN_INDEX_FILE})
+
+                #    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION     share/doc)
+
+                add_subdirectory(docs/)
+
+                attach_doxygen_to(${PROJ_NAME})
+                message(STATUS "- docs/ included ----")
+            endif ()
+        else ()
+            message(WARNING "docs/ folder not exists but ${PROJ_PREFIX}_BUILD_DOCS is ON.")
+        endif ()
     endif ()
 
+endmacro()
+
+macro(attach_doxygen_to target)
+    if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
+        add_dependencies(${target} docs)
+    endif ()
 endmacro()
 
 
