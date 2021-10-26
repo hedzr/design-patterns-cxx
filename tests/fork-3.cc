@@ -30,8 +30,8 @@ int main() {
         sleep(1); // Sleep for one second
     } else {
         wait_result = waitpid(child_pid, &stat_loc, WUNTRACED);
-        printf("### Parent ###\nCurrent PID: %d and Child PID: %d\n",
-               getpid(), child_pid);
+        printf("### Parent ###\nCurrent PID: %d and Child PID: %d\nWait Result: %d\n",
+               getpid(), child_pid, wait_result);
     }
 
     return 0;
