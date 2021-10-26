@@ -17,7 +17,7 @@
 void test_rb_tree() {
     dp::tree::rb_tree t;
     UNUSED(t);
-    
+
     t.insert(1);
     t.insert(2);
     t.insert(3);
@@ -25,7 +25,7 @@ void test_rb_tree() {
     t.insert(5);
     t.insert(6);
     t.insert(7);
-    
+
     t.erase(4);
 }
 

@@ -25,7 +25,6 @@ set(PROJECT_MACRO_PREFIX "DP_CXX")
 #        )
 
 
-
 #### OPTIONS ##################################################
 
 option(OK "PL-OK" ON)
@@ -33,8 +32,13 @@ option(OK "PL-OK" ON)
 #option(DP_CXX_BUILD_TESTS_EXAMPLES "Build Test Examples OK" OFF)
 #option(DP_CXX_BUILD_DOCS "Build Docs-OK" OFF)
 
+# the following options are just used for executables
 option(DP_CXX_ENABLE_ASSERTIONS "Enable Assertions-OK" ON)
 option(DP_CXX_ENABLE_PRECONDITION_CHECKS "Enable Precondition Checks-OK" ON)
+option(DP_CXX_ENABLE_VERBOSE_LOG "Enable `dbg_verbose_debug` macro definition (TRACE MODE)" OFF)
+option(DP_CXX_ENABLE_THREAD_POOL_READY_SIGNAL "Enable ready signal actions in thread_pool template class" ON)
+option(DP_CXX_TEST_THREAD_POOL_DBGOUT "Enable `pool_debug` macro definition" OFF)
+option(DP_CXX_UNIT_TEST "Enable the extra unit-tests" OFF)
 
 
 #### PROJECTS ##################################################
@@ -64,7 +68,7 @@ set(DP_CXX_header_files
         ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns_cxx/dp-x-class.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/include/design_patterns_cxx/dp-x-test.hh
         )
-define_cxx_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
+define_installable_cxx_library_project(${PROJECT_NAME} ${PROJECT_MACRO_PREFIX})
 
 
 #project(design_patterns_cxx)

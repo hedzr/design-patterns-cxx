@@ -18,9 +18,11 @@ namespace dp::tree {
     public:
     };
 
-    struct rb_tree {
-        //static const unsigned char RED = 0;
-        //static const unsigned char BLACK = 1;
+    class rb_tree {
+    public:
+        rb_tree() {}
+        ~rb_tree() { clear(); }
+        
         struct rb_node_t {
             bool color_is_red{};
             int key{};
@@ -35,10 +37,7 @@ namespace dp::tree {
             }
         };
         using rb_tree_t = rb_node_t *;
-
-        rb_tree() {}
-        ~rb_tree() { clear(); }
-
+        
     private:
         rb_node_t *_root{nullptr};
 
@@ -54,35 +53,35 @@ namespace dp::tree {
             if (_root == nullptr)
                 _root = new rb_node_t{false};
             auto *node = new rb_node_t{false, v};
-            insert_rbtree(_root, node);
+            insert_rbt(_root, node);
         }
 
     private:
-        int insert_rbtree(rb_node_t *&root, rb_node_t *node);
-        int rb_insert_fixup(rb_node_t *&root, rb_node_t *node);
-        static rb_node_t *rb_rotate_right(rb_node_t *&root, rb_node_t *node);
-        static rb_node_t *rb_rotate_left(rb_node_t *&root, rb_node_t *node);
+        int insert_rbt(rb_node_t *&root, rb_node_t *node);
+        int insert_rbt_fixup(rb_node_t *&root, rb_node_t *node);
+        static rb_node_t *rbt_rotate_right(rb_node_t *&root, rb_node_t *node);
+        static rb_node_t *rbt_rotate_left(rb_node_t *&root, rb_node_t *node);
 
     public:
         bool erase(int v) {
             if (_root)
-                return delete_rbtree(_root, v) == 0;
+                return delete_rbt(_root, v) == 0;
             return false;
         }
 
     private:
-        int delete_rbtree(rb_node_t *&root, int key);
-        static int rbtree_delete_fixup(rb_node_t *&root, rb_node_t *node, rb_node_t *parent);
+        int delete_rbt(rb_node_t *&root, int key);
+        static int delete_rbt_fixup(rb_node_t *&root, rb_node_t *node, rb_node_t *parent);
     };
 
 } // namespace dp::tree
 
 namespace dp::tree {
 
-    inline int rb_tree::insert_rbtree(rb_node_t *&root, rb_node_t *node) {
+    inline int rb_tree::insert_rbt(rb_node_t *&root, rb_node_t *node) {
         rb_node_t *p = root;
         rb_node_t *last = nullptr;
-        
+
         //find the position we need to insert
         while (p) {
             last = p;
@@ -105,13 +104,13 @@ namespace dp::tree {
             root = node;
         }
 
-        return rb_insert_fixup(root, node);
+        return insert_rbt_fixup(root, node);
     }
-    
-    inline int rb_tree::rb_insert_fixup(rb_node_t *&root, rb_node_t *node) {
+
+    inline int rb_tree::insert_rbt_fixup(rb_node_t *&root, rb_node_t *node) {
         rb_node_t *parent;
         rb_node_t *grandpa;
-        
+
         //If parent exist, and the color of parent is RED
         while ((parent = node->parent) && parent->color_is_red) {
             grandpa = parent->parent;
@@ -132,7 +131,7 @@ namespace dp::tree {
 
                 //Case 2: uncle is BLACK, and node is parent's right child
                 if (parent->right == node) {
-                    rb_rotate_left(root, parent);
+                    rbt_rotate_left(root, parent);
 
                     // reset parent and node pointer
                     rb_node_t *tmp;
@@ -144,7 +143,7 @@ namespace dp::tree {
                 //Case 3: uncle is BLACK, and node is parent's left child
                 parent->color_is_red = false;
                 grandpa->color_is_red = true;
-                rb_rotate_right(root, grandpa);
+                rbt_rotate_right(root, grandpa);
 
             } else {
                 rb_node_t *uncle = grandpa->left;
@@ -161,7 +160,7 @@ namespace dp::tree {
 
                 //Case 2: uncle is BLACK, and node is parent's left child
                 if (parent->left == node) {
-                    rb_rotate_right(root, parent);
+                    rbt_rotate_right(root, parent);
 
                     //reset parent and node pointer
                     rb_node_t *tmp;
@@ -173,17 +172,17 @@ namespace dp::tree {
                 //Case 3: uncle is BLACK, and node is parent's right child
                 parent->color_is_red = false;
                 grandpa->color_is_red = true;
-                rb_rotate_left(root, grandpa);
+                rbt_rotate_left(root, grandpa);
             }
         }
 
         root->color_is_red = false;
         return 0;
     }
-    
-    inline rb_tree::rb_node_t *rb_tree::rb_rotate_right(rb_node_t *&root, rb_node_t *node) {
+
+    inline rb_tree::rb_node_t *rb_tree::rbt_rotate_right(rb_node_t *&root, rb_node_t *node) {
         rb_node_t *left = node->left;
-        
+
         if (node->left == left->right) {
             left->right->parent = node;
         }
@@ -204,10 +203,10 @@ namespace dp::tree {
         node->parent = left;
         return left;
     }
-    
-    inline rb_tree::rb_node_t *rb_tree::rb_rotate_left(rb_node_t *&root, rb_node_t *node) {
+
+    inline rb_tree::rb_node_t *rb_tree::rbt_rotate_left(rb_node_t *&root, rb_node_t *node) {
         rb_node_t *right = node->right;
-        
+
         if (node->right == right->left) {
             right->left->parent = node;
         }
@@ -228,10 +227,10 @@ namespace dp::tree {
         node->parent = right;
         return right;
     }
-    
-    inline int rb_tree::delete_rbtree(rb_node_t *&root, int key) {
+
+    inline int rb_tree::delete_rbt(rb_node_t *&root, int key) {
         rb_node_t *p = root;
-        
+
         //find the node
         while (p) {
             if (p->key == key)
@@ -283,7 +282,7 @@ namespace dp::tree {
             p->left->parent = successor;
 
             if (!color_is_red)
-                rbtree_delete_fixup(root, successor_child, successor_parent);
+                delete_rbt_fixup(root, successor_child, successor_parent);
 
             p->left = nullptr;
             p->right = nullptr;
@@ -316,17 +315,17 @@ namespace dp::tree {
         }
 
         if (!color_is_red)
-            rbtree_delete_fixup(root, child, parent);
+            delete_rbt_fixup(root, child, parent);
 
         p->left = nullptr;
         p->right = nullptr;
         delete (p);
         return 0;
     }
-    
-    inline int rb_tree::rbtree_delete_fixup(rb_node_t *&root, rb_node_t *node, rb_node_t *parent) {
+
+    inline int rb_tree::delete_rbt_fixup(rb_node_t *&root, rb_node_t *node, rb_node_t *parent) {
         rb_node_t *brother = nullptr;
-        
+
         while ((!node || !node->color_is_red) && node != root) {
             if (parent->left == node) {
                 //The left branch
@@ -339,7 +338,7 @@ namespace dp::tree {
                     //1) Case 1: x's brother is COLOR_RED
                     brother->color_is_red = false;
                     parent->color_is_red = true;
-                    rb_rotate_left(root, node);
+                    rbt_rotate_left(root, node);
                     brother = parent->right;
                 }
 
@@ -355,7 +354,7 @@ namespace dp::tree {
                         // right child is COLOR_BLACK
                         brother->left->color_is_red = false;
                         brother->color_is_red = true;
-                        rb_rotate_right(root, brother);
+                        rbt_rotate_right(root, brother);
                         brother = parent->right;
                     }
 
@@ -363,7 +362,7 @@ namespace dp::tree {
                     brother->color_is_red = parent->color_is_red;
                     parent->color_is_red = false;
                     brother->right->color_is_red = false;
-                    rb_rotate_left(root, parent);
+                    rbt_rotate_left(root, parent);
 
                     node = root;
                     break;
@@ -377,7 +376,7 @@ namespace dp::tree {
                     //1) Case 1: x's brother is RED
                     brother->color_is_red = false;
                     parent->color_is_red = true;
-                    rb_rotate_right(root, parent);
+                    rbt_rotate_right(root, parent);
                     brother = parent->left;
                 }
 
@@ -393,7 +392,7 @@ namespace dp::tree {
                         // left child is BLACK
                         brother->right->color_is_red = false;
                         brother->color_is_red = true;
-                        rb_rotate_left(root, brother);
+                        rbt_rotate_left(root, brother);
                         brother = parent->left;
                     }
 
@@ -401,7 +400,7 @@ namespace dp::tree {
                     brother->color_is_red = parent->color_is_red;
                     parent->color_is_red = false;
                     brother->left->color_is_red = false;
-                    rb_rotate_right(root, parent);
+                    rbt_rotate_right(root, parent);
 
                     node = root;
                     break;
@@ -414,8 +413,8 @@ namespace dp::tree {
         }
         return 0;
     }
-    
-}
+
+} // namespace dp::tree
 
 
 #endif //DESIGN_PATTERNS_CXX_DP_TREE_HH

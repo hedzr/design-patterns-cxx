@@ -18,8 +18,20 @@ function(define_test_program name)
         list(APPEND src_list ${f})
     endforeach ()
 
+    # ensure_options_values(${PROJECT_MACRO_NAME} ${PROJECT_MACRO_PREFIX})
+
     add_executable(${PROJECT_NAME}-${name} ${src_list})
     #target_compile_features(${PROJECT_NAME}-${name} PRIVATE cxx_std_11)
+    target_compile_definitions(${PROJECT_NAME}-${name} PRIVATE
+            ${PROJECT_MACRO_PREFIX}_ENABLE_ASSERTIONS=${_${PROJECT_MACRO_NAME}_enable_assertions}
+            ${PROJECT_MACRO_PREFIX}_ENABLE_PRECONDITION_CHECKS=${_${PROJECT_MACRO_NAME}_enable_precondition_checks}
+            ${PROJECT_MACRO_PREFIX}_ENABLE_THREAD_POOL_READY_SIGNAL=${_${PROJECT_MACRO_NAME}_enable_thread_pool_ready_signal}
+            ${PROJECT_MACRO_PREFIX}_ENABLE_VERBOSE_LOG=${_${PROJECT_MACRO_NAME}_enable_verbose_log}
+            ${PROJECT_MACRO_PREFIX}_TEST_THREAD_POOL_DBGOUT=${_${PROJECT_MACRO_NAME}_enable_thread_pool_dbgout}
+            # ${PROJECT_MACRO_PREFIX}_UNIT_TEST=${_${PROJECT_MACRO_NAME}_unit_test}
+            ${PROJECT_MACRO_PREFIX}_UNIT_TEST=1
+            UNIT_TESTING=0
+            )
     target_include_directories(${PROJECT_NAME}-${name} PRIVATE
             $<BUILD_INTERFACE:${CMAKE_GENERATED_DIR}>
             ${CMAKE_SOURCE_DIR}
@@ -40,11 +52,12 @@ function(define_test_program name)
     #            )
     if (MSVC)
         target_compile_options(${PROJECT_NAME}-${name} PRIVATE /W4 /WX /utf-8
-                /D${PROJECT_MACRO_PREFIX}_UNIT_TEST=1)
+                #/D${PROJECT_MACRO_PREFIX}_UNIT_TEST=1
+                )
     else ()
         target_compile_options(${PROJECT_NAME}-${name} PRIVATE
                 -pedantic -Wall -Wextra -Wshadow -Werror -pthread
-                -D${PROJECT_MACRO_PREFIX}_UNIT_TEST=1
+                #-D${PROJECT_MACRO_PREFIX}_UNIT_TEST=1
                 )
         if (DEBUG)
             target_compile_options(${PROJECT_NAME}-${name} PRIVATE
@@ -104,6 +117,11 @@ define_test_program(dp-responsibility-chain dp-responsibility-chain.cc)
 
 define_test_program(rx dp-rx.cc)
 define_test_program(msg-dispatch msg-dispatch.cc)
+
+
+define_test_program(fork-1 fork-1.cc)
+define_test_program(fork-2 fork-2.cc)
+define_test_program(fork-3 fork-3.cc)
 
 
 #

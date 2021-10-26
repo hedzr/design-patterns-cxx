@@ -200,9 +200,12 @@ namespace dp::log {
 template<typename... Args>
 inline void dbg_verbose_debug([[maybe_unused]] Args &&...args) { (void) (sizeof...(args)); }
 #endif
+#else
+#define dbg_verbose_debug UNUSED
 #endif //!defined(dbg_verbose_debug)
 #if !defined(dbg_trace)
 #define dbg_trace dbg_verbose_debug
 #endif // !defined(dbg_trace)
+
 
 #endif //DESIGN_PATTERNS_CXX_DP_LOG_HH
