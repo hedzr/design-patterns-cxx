@@ -119,6 +119,7 @@ endif ()
 #include(GNUInstallDirs)
 
 
+#set(CMAKE_VERBOSE_MAKEFILE ON)
 if ((${CMAKE_VERBOSE_DEBUG} AND ${USE_DEBUG}) OR ($ENV{CI_RUNNING}))
     # Enable verbose output from Makefile builds.
     # This variable is a cache entry initialized (to FALSE) by the project() command.
