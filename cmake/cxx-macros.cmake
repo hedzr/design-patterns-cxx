@@ -175,7 +175,7 @@ set(${PROJ_NAME}_LIBRARIES ${PROJ_NAME})
 
     option(${PROJ_PREFIX}_BUILD_DOCS "generate documentation" OFF)
     if (${PROJ_PREFIX}_BUILD_DOCS OR (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR))
-        if (EXISTS docs/)
+        if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/")
             find_package(Doxygen)
             if (NOT DOXYGEN_FOUND)
                 set(${PROJ_PREFIX}_BUILD_DOCS OFF)
