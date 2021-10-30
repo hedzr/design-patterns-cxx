@@ -590,7 +590,7 @@ namespace dp::tree {
             // operator Data() { return _data; }
             Data &operator*() { return _data; }
             Data const &operator*() const { return _data; }
-            NodePtr const parent() const { return _parent; }
+            Node const* parent() const { return _parent; }
 
         public:
             void clear() {
@@ -1015,7 +1015,7 @@ namespace dp::tree {
             _root->emplace(std::forward<Args>(args)...);
         }
 
-        const NodePtr root() const { return _root; }
+        Node const * root() const { return _root; }
         NodePtr root() { return _root; }
 
         iterator begin() { return _root->begin(); }
