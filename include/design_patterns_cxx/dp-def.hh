@@ -59,11 +59,31 @@
 //#ifndef UNUSED
 //#define UNUSED(...) [__VA_ARGS__](){}
 //#endif
+
+/**
+ * @brief UNUSED macro 
+ * @tparam Args 
+ * @param args 
+ * @code{c++}
+ *   UNUSED(argc);
+ *   UNUSED(argc, argv);
+ *   // Cannot be used for variadic parameters:
+ *   //   template&lt;class... Args> void unused_func(Args &&...args) { UNUSED(args); }
+ *   // But you can expand the parameter pack like this:
+ *   //   template&lt;typename... Args>
+ *   //   inline void unused_func(Args &&...args) {
+ *   //       UNUSED(sizeof...(args));
+ *   //   }
+ * @endcode
+ */
 template<typename... Args>
 inline void UNUSED([[maybe_unused]] Args &&...args) {
     (void) (sizeof...(args));
 }
-
+template<class... Args>
+inline void unused_func(Args &&...args) {
+    UNUSED(sizeof...(args));
+}
 #elif __GNUC__ || _MSC_VER
 
 // c way unused
