@@ -587,10 +587,19 @@ namespace dp::tree {
                 : _data{std::forward<Args>(args)...} {}
             ~generic_node_t() { clear(); }
 
-            // operator Data() { return _data; }
+            Data &data() { return _data; }
+            Data const &data() const { return _data; }
             Data &operator*() { return _data; }
             Data const &operator*() const { return _data; }
-            Node const* parent() const { return _parent; }
+            Data *operator->() { return &_data; }
+            Data const *operator->() const { return &_data; }
+            Node *parent() { return _parent; }
+            Node const *parent() const { return _parent; }
+            bool has_children() const { return !_children.empty(); }
+            bool empty() const { return _children.empty(); }
+            Node &operator[](int index) { return *(_children[index]); }
+            Node const &operator[](int index) const { return *(_children[index]); }
+            size_type size() const { return _children.size(); }
 
         public:
             void clear() {
@@ -637,75 +646,47 @@ namespace dp::tree {
                 using reference = value_type &;
                 using iterator_category = std::forward_iterator_tag;
                 using self = preorder_iter_data;
+                using const_pointer = value_type const *;
+                using const_reference = value_type const &;
 
                 preorder_iter_data() {}
-                preorder_iter_data(pointer ptr_, bool on_children_ = false, size_type idx_ = 0)
+                preorder_iter_data(pointer ptr_, bool invalid_ = false)
                     : _ptr(ptr_)
-                    , _on_children(on_children_)
-                    , _child_idx(idx_) {}
+                    , _invalid(invalid_) {}
                 preorder_iter_data(const preorder_iter_data &o)
                     : _ptr(o._ptr)
-                    , _on_children(o._on_children)
-                    , _child_idx(o._child_idx) {}
+                    , _invalid(o._invalid) {}
                 preorder_iter_data &operator=(const preorder_iter_data &o) {
-                    _ptr = o._ptr, _on_children = o._on_children, _child_idx = o._child_idx;
+                    _ptr = o._ptr, _invalid = o._invalid;
                     return *this;
                 }
 
-                bool operator==(self const &r) const { return _ptr == r._ptr && _on_children == r._on_children && _child_idx == r._child_idx; }
-                bool operator!=(self const &r) const { return _ptr != r._ptr || _on_children != r._on_children || _child_idx != r._child_idx; }
-#if 0
-                bool operator==(preorder_iter_data const &r) const {
-                    return _ptr == r._ptr && _on_children == r._on_children && _child_idx == r._child_idx;
-                    // if (_ptr == r._ptr) {
-                    //     if (_ptr == nullptr)
-                    //         return true;
-                    //     if (_on_children == r._on_children)
-                    //         return _child_idx == r._child_idx;
-                    //     if (!_on_children && _child_idx == 0 && r._on_children && r._child_idx == r._ptr->_children.size())
-                    //         return true;
-                    //     if (!r._on_children && r._child_idx == 0 && _on_children && _child_idx == _ptr->_children.size())
-                    //         return true;
-                    // }
-                    // return false;
-                }
-                bool operator!=(preorder_iter_data const &r) const { return !operator==(r); }
-#endif
-                reference operator*() const {
-                    auto &ret = _ptr;
-                    if (_on_children) {
-                        if (ret->_children.empty() || _child_idx >= ret->_children.size())
-                            return *ret;
-                        return *(ret->_children[_child_idx]);
-                    }
-                    return *ret;
-                }
+                bool operator==(self const &r) const { return _ptr == r._ptr && _invalid == r._invalid; }
+                bool operator!=(self const &r) const { return _ptr != r._ptr || _invalid != r._invalid; }
+                reference data() { return *_ptr; }
+                const_reference data() const { return *_ptr; }
+                reference operator*() { return data(); }
+                const_reference operator*() const { return data(); }
+                pointer operator->() { return &(data()); }
+                const_pointer operator->() const { return &(data()); }
                 self &operator++() { return _incr(); }
                 self operator++(int) {
-                    self copy{_ptr, _on_children, _child_idx};
+                    self copy{_ptr, _invalid};
                     ++(*this);
                     return copy;
                 }
 
-                static self begin(pointer root_) {
-                    return self{root_};
-                    // NodePtr p = root_, last{nullptr};
-                    // while (p) {
-                    //     last = p;
-                    //     if (p->_children.empty())
-                    //         break;
-                    //     p = (p->_children[0]);
-                    // }
-                    // return self{last, !last->_children.empty()};
+                static self begin(const_pointer root_) {
+                    return self{const_cast<pointer>(root_)};
                 }
-                static self end(pointer root_) {
-                    if (root_ == nullptr) return self{root_};
-                    pointer p = root_, last{nullptr};
+                static self end(const_pointer root_) {
+                    if (root_ == nullptr) return self{const_cast<pointer>(root_)};
+                    pointer p = const_cast<pointer>(root_), last{nullptr};
                     while (p) {
                         last = p;
-                        if (p->_children.empty())
+                        if (p->empty())
                             break;
-                        p = (p->_children[p->_children.size() - 1]);
+                        p = &((*p)[p->size() - 1]);
                     }
                     auto it = self{last, true};
                     ++it;
@@ -714,42 +695,42 @@ namespace dp::tree {
 
             private:
                 self &_incr() {
-                    auto ret = _ptr;
-                    // auto idx = _child_idx;
-
-                    if (_on_children) {
-                        _child_idx++;
-                    } else {
-                        _on_children = true;
+                    if (_invalid) {
                         return (*this);
                     }
 
-                    if (ret->_parent && _child_idx >= ret->_children.size()) {
-                        _ptr = ret->_parent;
-                        _child_idx = 0;
-                        _on_children = false;
-
-                        for (auto *it : ret->_parent->_children) {
-                            _child_idx++;
-                            if (it == ret) break;
+                    auto *cc = _ptr;
+                    if (cc->empty()) {
+                        Node *pp = cc;
+                        size_type idx;
+                    go_up_level:
+                        pp = pp->parent();
+                        idx = 0;
+                        for (auto *vv : pp->_children) {
+                            ++idx;
+                            if (vv == _ptr) break;
                         }
-
-                        if (_child_idx >= ret->_parent->_children.size()) {
-                            // end() ?
-                            _on_children = true;
+                        if (idx < pp->size()) {
+                            _ptr = &((*pp)[idx]);
+                        } else {
+                            if (pp->parent()) {
+                                goto go_up_level;
+                            }
+                            _invalid = true;
                         }
+                    } else {
+                        _ptr = &((*cc)[0]);
                     }
-
                     return (*this);
                 }
 
                 pointer _ptr{};
-                bool _on_children{};
-                size_type _child_idx{};
+                bool _invalid{};
+                // size_type _child_idx{};
             };
 
             using iterator = preorder_iter_data;
-            using const_iterator = const iterator;
+            using const_iterator = iterator;
             iterator begin() { return iterator::begin(this); }
             const_iterator begin() const { return const_iterator::begin(this); }
             iterator end() { return iterator::end(this); }
@@ -764,6 +745,8 @@ namespace dp::tree {
                 using reference = value_type &;
                 using iterator_category = std::forward_iterator_tag;
                 using self = rev_preorder_iter_data;
+                using const_pointer = value_type const *;
+                using const_reference = value_type const &;
 
                 rev_preorder_iter_data() {}
                 rev_preorder_iter_data(pointer ptr_, bool on_children_ = false, size_type idx_ = 0)
@@ -781,7 +764,7 @@ namespace dp::tree {
 
                 bool operator==(self const &r) const { return _ptr == r._ptr && _on_children == r._on_children && _child_idx == r._child_idx; }
                 bool operator!=(self const &r) const { return _ptr != r._ptr || _on_children != r._on_children || _child_idx != r._child_idx; }
-                reference operator*() const {
+                reference data() const {
                     auto &ret = _ptr;
                     if (_on_children) {
                         if (ret->_children.empty() || _child_idx >= ret->_children.size())
@@ -790,12 +773,17 @@ namespace dp::tree {
                     }
                     return *ret;
                 }
+                reference operator*() { return data(); }
+                const_reference operator*() const { return data(); }
+                pointer operator->() { return &(data()); }
+                const_pointer operator->() const { return &(data()); }
                 self &operator++() { return _decr(); }
                 self operator++(int) {
                     self copy{_ptr, _on_children, _child_idx};
                     ++(*this);
                     return copy;
                 }
+
                 static self begin(pointer root_) {
                     if (root_) {
                         pointer p = root_, last{nullptr};
@@ -857,7 +845,7 @@ namespace dp::tree {
             };
 
             using reverse_iterator = rev_preorder_iter_data;
-            using const_reverse_iterator = const reverse_iterator;
+            using const_reverse_iterator = reverse_iterator;
             reverse_iterator rbegin() { return reverse_iterator::begin(this); }
             const_reverse_iterator rbegin() const { return reverse_iterator::begin(this); }
             reverse_iterator rend() { return const_reverse_iterator::end(this); }
@@ -985,6 +973,13 @@ namespace dp::tree {
         using reverse_iterator = typename Node::reverse_iterator;
         using const_reverse_iterator = typename Node::const_reverse_iterator;
 
+        using difference_type = std::ptrdiff_t;
+        using value_type = typename iterator::value_type;
+        using pointer = typename iterator::pointer;
+        using reference = typename iterator::reference;
+        using const_pointer = typename iterator::const_pointer;
+        using const_reference = typename iterator::const_reference;
+
         ~tree_t() { clear(); }
 
         void clear() override {
@@ -1015,8 +1010,8 @@ namespace dp::tree {
             _root->emplace(std::forward<Args>(args)...);
         }
 
-        Node const * root() const { return _root; }
-        NodePtr root() { return _root; }
+        Node const &root() const { return *_root; }
+        Node &root() { return *_root; }
 
         iterator begin() { return _root->begin(); }
         iterator end() { return _root->end(); }
@@ -1027,7 +1022,20 @@ namespace dp::tree {
         const_reverse_iterator rbegin() const { return _root->rbegin(); }
         const_reverse_iterator rend() const { return _root->rend(); }
 
-        // void find();
+        // const_iterator find(const_reference v) const {
+        //     auto const it = begin(), end_ = end();
+        //     for (; it != end_; ++it)
+        //         if ((*it) == v)
+        //             break;
+        //     return it;
+        // }
+        const_iterator find(std::function<bool(const_reference)> &&pred_) const {
+            auto it = begin(), end_ = end();
+            for (; it != end_; ++it)
+                if (pred_(*it))
+                    break;
+            return it;
+        }
 
     private:
         NodePtr _root{nullptr};

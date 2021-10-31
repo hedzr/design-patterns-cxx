@@ -64,6 +64,9 @@ public:
     int val;
     std::string str;
 
+    friend bool operator==(tree_data const &lhs, int const &rhs) {
+        return lhs.val == rhs;
+    }
     friend bool operator==(tree_data const &lhs, tree_data const &rhs) {
         return lhs.val == rhs.val;
     }
@@ -381,11 +384,57 @@ void test_g_tree() {
         v = 9;
         std::sprintf(buf.data(), "str#%d", v);
         t.emplace(v, buf.data());
+
+        {
+            auto b = t.root().begin(), e = t.root().end();
+            auto &bNode = (*b), &eNode = (*e);
+            std::cout << "::: " << (*bNode) << '\n'; // print bNode.data()
+            std::cout << "::: " << (eNode.data()) << '\n';
+        }
+
+        {
+            int i;
+            i = 0;
+            for (auto &vv : t) {
+                std::cout << i << ": " << (*vv) << ", " << '\n';
+                if (i == 8) {
+                    std::cout << ' ';
+                }
+                i++;
+            }
+            std::cout << '\n';
+        }
+
+        using T = decltype(t);
+        auto it = std::find_if(t.root().begin(), t.root().end(), [](typename T::NodeT &n) -> bool { return (*n) == 9; });
+
+        v = 10;
+        std::sprintf(buf.data(), "str#%d", v);
+        it->emplace(v, buf.data());
+
+        v = 11;
+        std::sprintf(buf.data(), "str#%d", v);
+        (*it).emplace(v, buf.data());
+
+#if defined(_DEBUG)
+        auto const itv = t.find([](T::const_reference n) { return (*n) == 10; });
+        assert(*(*itv) == 10);
+#endif
     }
 
     //
 
     int i;
+
+    i = 0;
+    for (auto &v : t) {
+        std::cout << i << ": " << (*v) << ", " << '\n';
+        if (i == 8) {
+            std::cout << ' ';
+        }
+        i++;
+    }
+    std::cout << '\n';
 
     i = 0;
     for (auto it = t.rbegin(); it != t.rend(); ++it, ++i) {
@@ -394,18 +443,6 @@ void test_g_tree() {
         if (i == 8) {
             std::cout << ' ';
         }
-    }
-    std::cout << '\n';
-
-    // auto it = t.begin();
-    // ++it; //it++;
-    i = 0;
-    for (auto &v : t) {
-        std::cout << i << ": " << (*v) << ", " << '\n';
-        if (i == 8) {
-            std::cout << ' ';
-        }
-        i++;
     }
     std::cout << '\n';
 }
