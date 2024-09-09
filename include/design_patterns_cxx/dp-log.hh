@@ -245,4 +245,8 @@ void dp_verbose_debug([[maybe_unused]] Args &&...args) {
 #endif
 #define dp_trace dp_verbose_debug
 
+#define dbg_print dp_print
+#define dbg_debug dp_debug
+#define dbg_verbose_debug dp_verbose_debug
+
 #endif // DESIGN_PATTERNS_CXX_DP_LOG_HH

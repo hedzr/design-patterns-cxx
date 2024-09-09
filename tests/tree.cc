@@ -10,94 +10,103 @@
 
 #include "design_patterns_cxx/dp-tree.hh"
 
+#include "design_patterns_cxx/dp-common.hh"
+#include "design_patterns_cxx/dp-def.hh"
+
 #include "design_patterns_cxx/dp-log.hh"
 #include "design_patterns_cxx/dp-util.hh"
 #include "design_patterns_cxx/dp-x-test.hh"
 
+#include <algorithm>
+#include <iostream>
+#include <utility>
+#include <vector>
+
+
 template<typename Data>
 void tree_info(dp::tree::rb_tree<Data> &t) {
-    std::cout << "-----------------------------------------------" << '\n';
-    std::cout << "  tree count: " << t.count() << '\n';
-    std::cout << "  tree height: " << t.height() << '\n';
-    std::cout << "  in-order: ";
-    t.traverse_in_order(t.root(), [](auto *node) {
-        std::cout << node->key << ", ";
-    });
-    std::cout << '\n';
-    std::cout << "  level-order: ";
-    t.traverse_level_order(t.root(), [](auto *node) {
-        std::cout << node->key << ", ";
-    });
-    std::cout << '\n';
+  std::cout << "-----------------------------------------------" << '\n';
+  std::cout << "  tree count: " << t.count() << '\n';
+  std::cout << "  tree height: " << t.height() << '\n';
+  std::cout << "  in-order: ";
+  t.traverse_in_order(t.root(), [](auto *node) {
+    std::cout << node->key << ", ";
+  });
+  std::cout << '\n';
+  std::cout << "  level-order: ";
+  t.traverse_level_order(t.root(), [](auto *node) {
+    std::cout << node->key << ", ";
+  });
+  std::cout << '\n';
 }
 
 void test_rb_tree_decr() {
-    dp::tree::rb_tree<int> t;
-    UNUSED(t);
+  dp::tree::rb_tree<int> t;
+  UNUSED(t);
 
-    for (auto v : {7, 6, 5, 4, 3, 2, 1}) {
-        t.insert(v);
-        tree_info(t);
-    }
-
-    t.erase(4);
+  for (auto v : {7, 6, 5, 4, 3, 2, 1}) {
+    t.insert(v);
     tree_info(t);
-    assertm(t.count() == 6, "bad tree count");
+  }
+
+  t.erase(4);
+  tree_info(t);
+  assertm(t.count() == 6, "bad tree count");
 }
 
 void test_rb_tree_incr() {
-    dp::tree::rb_tree<int> t;
-    UNUSED(t);
+  dp::tree::rb_tree<int> t;
+  UNUSED(t);
 
-    for (auto v : {1, 2, 3, 4, 5, 6, 7}) {
-        t.insert(v);
-        tree_info(t);
-    }
-
-    t.erase(4);
+  for (auto v : {1, 2, 3, 4, 5, 6, 7}) {
+    t.insert(v);
     tree_info(t);
-    assertm(t.count() == 6, "bad tree count");
+  }
+
+  t.erase(4);
+  tree_info(t);
+  assertm(t.count() == 6, "bad tree count");
 }
 
 class tree_data {
 public:
-    int val;
-    std::string str;
+  int val;
+  std::string str;
 
-    friend bool operator==(tree_data const &lhs, int const &rhs) {
-        return lhs.val == rhs;
-    }
-    friend bool operator==(tree_data const &lhs, tree_data const &rhs) {
-        return lhs.val == rhs.val;
-    }
-    friend bool operator<(tree_data const &lhs, tree_data const &rhs) {
-        return lhs.val < rhs.val;
-    }
-    friend std::ostream &operator<<(std::ostream &os, tree_data const &o) {
-        return os << '(' << o.val << ',' << o.str << ')';
-    }
+  friend bool operator==(tree_data const &lhs, int const &rhs) {
+    return lhs.val == rhs;
+  }
+  friend bool operator==(tree_data const &lhs, tree_data const &rhs) {
+    return lhs.val == rhs.val;
+  }
+  friend bool operator<(tree_data const &lhs, tree_data const &rhs) {
+    return lhs.val < rhs.val;
+  }
+  friend std::ostream &operator<<(std::ostream &os, tree_data const &o) {
+    return os << '(' << o.val << ',' << o.str << ')';
+  }
 };
 
 void test_rb_tree() {
-    dp::tree::rb_tree<tree_data> t;
-    UNUSED(t);
+  dp::tree::rb_tree<tree_data> t;
+  UNUSED(t);
 
-    std::array<char, 128> buf;
-    for (auto v : {1, 2, 3, 4, 5, 6, 7}) {
-        std::sprintf(buf.data(), "str#%d", v);
-        t.emplace(v, buf.data());
-        tree_info(t);
-    }
+  std::array<char, 128> buf;
+  for (auto v : {1, 2, 3, 4, 5, 6, 7}) {
+    std::snprintf(buf.data(), buf.size(), "str#%d", v);
+    t.emplace(v, buf.data());
+    tree_info(t);
+  }
 }
 
 void test_invalid_iterator() {
-    std::vector<int> vi{3, 7};
-    auto it = vi.begin();
-    it = vi.insert(it, 11);
-    vi.insert(it, 5000, 23);
-    vi.insert(it, 1, 31); // should crash here
-    std::cout << (*it) << '\n';
-    return;
+  std::vector<int> vi{3, 7};
+  auto it = vi.begin();
+  it = vi.insert(it, 11);
+  vi.insert(it, 5000, 23);
+  vi.insert(it, 1, 31); // should crash here
+  std::cout << (*it) << '\n';
+  return;
 }
 
 namespace customized_iterators {
@@ -258,201 +267,201 @@ namespace customized_iterators {
     void swap(X<T,A>&, X<T,A>&); //optional
 #endif
 
+  template<long FROM, long TO>
+  class Range {
+  public:
+    // member typedefs provided through inheriting from std::iterator
+    class iterator : public std::iterator<std::forward_iterator_tag, // iterator_category
+                                          long,                      // value_type
+                                          long,                      // difference_type
+                                          const long *,              // pointer
+                                          const long &               // reference
+                                          > {
+      long num = FROM;
+
+    public:
+      iterator(long _num = 0)
+          : num(_num) {}
+      iterator &operator++() {
+        num = TO >= FROM ? num + 1 : num - 1;
+        return *this;
+      }
+      iterator operator++(int) {
+        iterator ret_val = *this;
+        ++(*this);
+        return ret_val;
+      }
+      bool operator==(iterator other) const { return num == other.num; }
+      bool operator!=(iterator other) const { return !(*this == other); }
+      long operator*() { return num; }
+    };
+    iterator begin() { return FROM; }
+    iterator end() { return TO >= FROM ? TO + 1 : TO - 1; }
+  };
+
+  namespace manually {
     template<long FROM, long TO>
     class Range {
     public:
-        // member typedefs provided through inheriting from std::iterator
-        class iterator : public std::iterator<std::forward_iterator_tag, // iterator_category
-                                              long,                      // value_type
-                                              long,                      // difference_type
-                                              const long *,              // pointer
-                                              const long &               // reference
-                                              > {
-            long num = FROM;
+      class iterator {
+        long num = FROM;
 
-        public:
-            iterator(long _num = 0)
-                : num(_num) {}
-            iterator &operator++() {
-                num = TO >= FROM ? num + 1 : num - 1;
-                return *this;
-            }
-            iterator operator++(int) {
-                iterator ret_val = *this;
-                ++(*this);
-                return ret_val;
-            }
-            bool operator==(iterator other) const { return num == other.num; }
-            bool operator!=(iterator other) const { return !(*this == other); }
-            long operator*() { return num; }
-        };
-        iterator begin() { return FROM; }
-        iterator end() { return TO >= FROM ? TO + 1 : TO - 1; }
+      public:
+        iterator(long _num = 0)
+            : num(_num) {}
+        iterator &operator++() {
+          num = TO >= FROM ? num + 1 : num - 1;
+          return *this;
+        }
+        iterator operator++(int) {
+          iterator ret_val = *this;
+          ++(*this);
+          return ret_val;
+        }
+        bool operator==(iterator other) const { return num == other.num; }
+        bool operator!=(iterator other) const { return !(*this == other); }
+        long operator*() { return num; }
+        // iterator traits
+        using difference_type = long;
+        using value_type = long;
+        using pointer = const long *;
+        using reference = const long &;
+        using iterator_category = std::forward_iterator_tag;
+      };
+      iterator begin() { return FROM; }
+      iterator end() { return TO >= FROM ? TO + 1 : TO - 1; }
     };
+  } // namespace manually
 
-    namespace manually {
-        template<long FROM, long TO>
-        class Range {
-        public:
-            class iterator {
-                long num = FROM;
+  void test_range() {
+    manually::Range<5, 13> r;
+    for (auto v : r) std::cout << v << ',';
+    std::cout << '\n';
 
-            public:
-                iterator(long _num = 0)
-                    : num(_num) {}
-                iterator &operator++() {
-                    num = TO >= FROM ? num + 1 : num - 1;
-                    return *this;
-                }
-                iterator operator++(int) {
-                    iterator ret_val = *this;
-                    ++(*this);
-                    return ret_val;
-                }
-                bool operator==(iterator other) const { return num == other.num; }
-                bool operator!=(iterator other) const { return !(*this == other); }
-                long operator*() { return num; }
-                // iterator traits
-                using difference_type = long;
-                using value_type = long;
-                using pointer = const long *;
-                using reference = const long &;
-                using iterator_category = std::forward_iterator_tag;
-            };
-            iterator begin() { return FROM; }
-            iterator end() { return TO >= FROM ? TO + 1 : TO - 1; }
-        };
-    } // namespace manually
-
-    void test_range() {
-        manually::Range<5, 13> r;
-        for (auto v : r) std::cout << v << ',';
-        std::cout << '\n';
-
-        {
-            std::list<int> l{1, 2, 3};
-            auto it = l.begin();
-            ++it;
-            (*it) = 5;
-        }
-        {
-            std::vector<int> l{1, 2, 3};
-            auto it = l.begin();
-            ++it;
-            (*it) = 5;
-        }
+    {
+      std::list<int> l{1, 2, 3};
+      auto it = l.begin();
+      ++it;
+      (*it) = 5;
     }
+    {
+      std::vector<int> l{1, 2, 3};
+      auto it = l.begin();
+      ++it;
+      (*it) = 5;
+    }
+  }
 
-    struct incr {
-        int val{};
-        incr &operator++() {
-            val++;
-            return *this;
-        }
-        incr operator++(int) {
-            incr ret_val = *this;
-            ++(*this);
-            return ret_val;
-        }
-    };
+  struct incr {
+    int val{};
+    incr &operator++() {
+      val++;
+      return *this;
+    }
+    incr operator++(int) {
+      incr ret_val = *this;
+      ++(*this);
+      return ret_val;
+    }
+  };
 } // namespace customized_iterators
 
 void test_g_tree() {
-    dp::tree::tree_t<tree_data> t;
-    UNUSED(t);
-    assert(t.rbegin() == t.rend());
-    assert(t.begin() == t.end());
+  dp::tree::tree_t<tree_data> t;
+  UNUSED(t);
+  assert(t.rbegin() == t.rend());
+  assert(t.begin() == t.end());
 
-    std::array<char, 128> buf;
+  std::array<char, 128> buf;
 
-    //     1
-    // 2 3 4 5 6 7
-    for (auto v : {1, 2, 3, 4, 5, 6, 7}) {
-        std::sprintf(buf.data(), "str#%d", v);
-        // t.insert(tree_data{v, buf.data()});
-        tree_data vd{v, buf.data()};
-        t.insert(std::move(vd));
-        // tree_info(t);
+  //     1
+  // 2 3 4 5 6 7
+  for (auto v : {1, 2, 3, 4, 5, 6, 7}) {
+    std::snprintf(buf.data(), buf.size(), "str#%d", v);
+    // t.insert(tree_data{v, buf.data()});
+    tree_data vd{v, buf.data()};
+    t.insert(std::move(vd));
+    // tree_info(t);
+  }
+
+  {
+    auto v = 8;
+    std::snprintf(buf.data(), buf.size(), "str#%d", v);
+    tree_data td{v, buf.data()};
+    t.insert(td);
+
+    v = 9;
+    std::snprintf(buf.data(), buf.size(), "str#%d", v);
+    t.emplace(v, buf.data());
+
+    {
+      auto b = t.root().begin(), e = t.root().end();
+      auto &bNode = (*b), &eNode = (*e);
+      std::cout << "::: " << (*bNode) << '\n'; // print bNode.data()
+      std::cout << "::: " << (eNode.data()) << '\n';
     }
 
     {
-        auto v = 8;
-        std::sprintf(buf.data(), "str#%d", v);
-        tree_data td{v, buf.data()};
-        t.insert(td);
-
-        v = 9;
-        std::sprintf(buf.data(), "str#%d", v);
-        t.emplace(v, buf.data());
-
-        {
-            auto b = t.root().begin(), e = t.root().end();
-            auto &bNode = (*b), &eNode = (*e);
-            std::cout << "::: " << (*bNode) << '\n'; // print bNode.data()
-            std::cout << "::: " << (eNode.data()) << '\n';
-        }
-
-        {
-            int i;
-            i = 0;
-            for (auto &vv : t) {
-                std::cout << i << ": " << (*vv) << ", " << '\n';
-                if (i == 8) {
-                    std::cout << ' ';
-                }
-                i++;
-            }
-            std::cout << '\n';
-        }
-
-        using T = decltype(t);
-        auto it = std::find_if(t.root().begin(), t.root().end(), [](typename T::NodeT &n) -> bool { return (*n) == 9; });
-
-        v = 10;
-        std::sprintf(buf.data(), "str#%d", v);
-        it->emplace(v, buf.data());
-
-        v = 11;
-        std::sprintf(buf.data(), "str#%d", v);
-        (*it).emplace(v, buf.data());
-
-#if defined(_DEBUG)
-        auto const itv = t.find([](T::const_reference n) { return (*n) == 10; });
-        assert(*(*itv) == 10);
-#endif
-    }
-
-    //
-
-    int i;
-
-    i = 0;
-    for (auto &v : t) {
-        std::cout << i << ": " << (*v) << ", " << '\n';
+      int i;
+      i = 0;
+      for (auto &vv : t) {
+        std::cout << i << ": " << (*vv) << ", " << '\n';
         if (i == 8) {
-            std::cout << ' ';
+          std::cout << ' ';
         }
         i++;
+      }
+      std::cout << '\n';
     }
-    std::cout << '\n';
 
-    i = 0;
-    for (auto it = t.rbegin(); it != t.rend(); ++it, ++i) {
-        auto &v = (*it);
-        std::cout << i << ": " << (*v) << ", " << '\n';
-        if (i == 8) {
-            std::cout << ' ';
-        }
+    using T = decltype(t);
+    auto it = std::find_if(t.root().begin(), t.root().end(), [](typename T::NodeT &n) -> bool { return (*n) == 9; });
+
+    v = 10;
+    std::snprintf(buf.data(), buf.size(), "str#%d", v);
+    it->emplace(v, buf.data());
+
+    v = 11;
+    std::snprintf(buf.data(), buf.size(), "str#%d", v);
+    (*it).emplace(v, buf.data());
+
+#if defined(_DEBUG)
+    auto const itv = t.find([](T::const_reference n) { return (*n) == 10; });
+    assert(*(*itv) == 10);
+#endif
+  }
+
+  //
+
+  int i;
+
+  i = 0;
+  for (auto &v : t) {
+    std::cout << i << ": " << (*v) << ", " << '\n';
+    if (i == 8) {
+      std::cout << ' ';
     }
-    std::cout << '\n';
+    i++;
+  }
+  std::cout << '\n';
+
+  i = 0;
+  for (auto it = t.rbegin(); it != t.rend(); ++it, ++i) {
+    auto &v = (*it);
+    std::cout << i << ": " << (*v) << ", " << '\n';
+    if (i == 8) {
+      std::cout << ' ';
+    }
+  }
+  std::cout << '\n';
 }
 
 int main() {
-    DP_TEST_FOR(test_rb_tree_decr);
-    DP_TEST_FOR(test_rb_tree_incr);
-    DP_TEST_FOR(test_rb_tree);
+  DP_TEST_FOR(test_rb_tree_decr);
+  DP_TEST_FOR(test_rb_tree_incr);
+  DP_TEST_FOR(test_rb_tree);
 
-    DP_TEST_FOR(test_g_tree);
+  DP_TEST_FOR(test_g_tree);
 
-    DP_TEST_FOR(customized_iterators::test_range);
+  DP_TEST_FOR(customized_iterators::test_range);
 }
